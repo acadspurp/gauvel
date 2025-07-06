@@ -6,7 +6,7 @@
   <title>Checkout - GAUVEL</title>
   <link rel="stylesheet" href="styles.css">
   <style>
-        :root {
+    :root {
       --color-white: #ffffff;
       --color-black: #000000;
       --color-grey-light: #f5f5f5;
@@ -24,7 +24,7 @@
       color: var(--color-grey-dark);
       line-height: 1.6;
       margin-top: 80px;
-      font-size: 0.9rem;
+      font-size: 0.65rem;
     }
 
     .checkout-container {
@@ -45,7 +45,7 @@
     }
 
     .checkout-header h1 {
-      font-size: 1.5rem;
+      font-size: 1rem;
       font-weight: 600;
       color: var(--color-black);
       margin-bottom: 0.5rem;
@@ -55,26 +55,7 @@
 
     .checkout-header p {
       color: var(--color-grey-dark);
-      font-size: 0.9rem;
-    }
-
-    .back-button {
-      position: absolute;
-      top: 1rem;
-      left: 1rem;
-      background: none;
-      border: none;
-      font-size: 1.2rem;
-      cursor: pointer;
-      color: var(--color-grey-dark);
-      padding: 0.5rem;
-      border-radius: 50%;
-      transition: all 0.3s ease;
-    }
-
-    .back-button:hover {
-      background: var(--color-grey-medium);
-      color: var(--color-black);
+      font-size: 0.65rem;
     }
 
     .order-summary {
@@ -87,7 +68,7 @@
     }
 
     .order-summary h2 {
-      font-size: 1.3rem;
+      font-size: 0.95rem;
       color: var(--color-black);
       margin-bottom: 1.5rem;
       text-transform: uppercase;
@@ -135,17 +116,17 @@
       color: var(--color-black);
       margin-bottom: 0.25rem;
       font-weight: 500;
-      font-size: 0.95rem;
+      font-size: 0.75rem;
     }
 
     .item-info p {
       color: var(--color-grey-dark);
-      font-size: 0.85rem;
+      font-size: 0.65rem;
       margin-bottom: 0.25rem;
     }
 
     .item-price {
-      font-size: 1rem;
+      font-size: 0.75rem;
       font-weight: 600;
       color: var(--color-black);
     }
@@ -163,7 +144,7 @@
       justify-content: space-between;
       margin-bottom: 0.75rem;
       padding: 0.25rem 0;
-      font-size: 0.9rem;
+      font-size: 0.7rem;
     }
 
     .total-row:last-child {
@@ -171,7 +152,7 @@
       padding-top: 0.75rem;
       border-top: 2px solid var(--color-grey-medium);
       font-weight: 600;
-      font-size: 1rem;
+      font-size: 0.8rem;
     }
 
     .total-label {
@@ -200,15 +181,15 @@
 
     .checkout-btn,
     .continue-shopping {
-      padding: 0.8rem 1.5rem;
+      padding: 0.5rem 1rem;
       border: none;
       border-radius: 6px;
-      font-size: 0.95rem;
+      font-size: 0.65rem;
       font-weight: 600;
       text-transform: uppercase;
       letter-spacing: 0.5px;
       transition: all 0.3s ease;
-      min-width: 180px;
+      min-width: 140px;
       cursor: pointer;
     }
 
@@ -249,60 +230,58 @@
 </head>
 <body>
   <div class="checkout-container">
-    <button class="back-button" onclick="goBack()" title="Go Back">←</button>
     <div class="checkout-header">
       <h1>Checkout</h1>
       <p>Review your order and complete your purchase</p>
     </div>
+
     <div class="checkout-content">
       <div class="order-summary">
         <h2>Order Summary</h2>
         <div id="order-items"></div>
         <div class="total-section">
-          <div class="total-row"><span class="total-label">Subtotal</span><span class="total-value" id="subtotal">₱0.00</span></div>
-          <div class="total-row"><span class="total-label">Tax (8%)</span><span class="total-value" id="tax">₱0.00</span></div>
-          <div class="total-row"><span class="total-label">Total</span><span class="total-value" id="total">₱0.00</span></div>
+          <div class="total-row">
+            <span class="total-label">Subtotal</span>
+            <span class="total-value" id="subtotal">₱0.00</span>
+          </div>
+          <div class="total-row">
+            <span class="total-label">Tax (8%)</span>
+            <span class="total-value" id="tax">₱0.00</span>
+          </div>
+          <div class="total-row">
+            <span class="total-label">Total</span>
+            <span class="total-value" id="total">₱0.00</span>
+          </div>
         </div>
       </div>
     </div>
+
     <div class="checkout-actions">
       <button class="checkout-btn" onclick="processPayment()">Complete Purchase</button>
-      <button class="continue-shopping" onclick="goBack()">Continue Shopping</button>
+      <a href="products.html" class="continue-shopping">Continue Shopping</a>
     </div>
   </div>
 
   <script>
-    function goBack() {
-      const checkout = document.getElementById('checkoutContainer');
-      if (checkout) {
-        checkout.classList.remove('visible');
-        setTimeout(() => {
-          checkout.style.display = 'none';
-        }, 400);
-      }
-      const home = document.getElementById('home');
-      const about = document.getElementById('about');
-      if (home) home.style.display = 'block';
-      if (about) about.style.display = 'block';
-    }
-
     function processPayment() {
       const btn = document.querySelector('.checkout-btn');
       const originalText = btn.textContent;
       btn.textContent = 'Processing...';
       btn.disabled = true;
+
       setTimeout(() => {
         alert('Thank you for your purchase! Your order has been confirmed.');
         localStorage.removeItem('checkoutProduct');
         btn.textContent = originalText;
         btn.disabled = false;
-        goBack();
+        window.location.href = 'index.html';
       }, 2000);
     }
 
     function populateOrderSummary() {
       const orderItems = document.getElementById('order-items');
       const product = JSON.parse(localStorage.getItem('checkoutProduct'));
+
       if (!product) {
         orderItems.innerHTML = `
           <div class="empty-cart">
@@ -313,6 +292,7 @@
         `;
         return;
       }
+
       const itemDiv = document.createElement('div');
       itemDiv.className = 'summary-item';
       itemDiv.innerHTML = `
@@ -329,10 +309,13 @@
         </div>
         <div class="item-price" id="product-price">₱${product.price.toFixed(2)}</div>
       `;
+
       orderItems.appendChild(itemDiv);
+
       const subtotal = product.price;
       const tax = subtotal * 0.08;
       const total = subtotal + tax;
+
       document.getElementById('subtotal').textContent = `₱${subtotal.toFixed(2)}`;
       document.getElementById('tax').textContent = `₱${tax.toFixed(2)}`;
       document.getElementById('total').textContent = `₱${total.toFixed(2)}`;

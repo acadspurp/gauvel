@@ -467,7 +467,7 @@
 					const provinces = await provRes.json();
 
 					if (provinces.length === 0) {
-						provinceSelect.innerHTML = '<option value="">N/A</option>';
+						provinceSelect.innerHTML = '<option value="N/A">N/A</option>';
 						const citiesRes = await fetch(`${BASE_URL}/regions/${regionCode}/cities-municipalities/`);
 						const cities = await citiesRes.json();
 						districtSelect.innerHTML = '<option value="">Select City/Municipality</option>';

@@ -53,9 +53,8 @@
 		<h2 class="cart-title">Shopping Cart</h2>
 		<div class="cart-content"></div>
 		<div class="cart-actions">
-			<button class="checkout-btn-mini" onclick="openCheckout()">CHECKOUT
-			<a href="checkout.html"</a>
-			</button>
+			<!-- ✅ Button to open dynamic checkout -->
+			<button class="checkout-btn-mini" onclick="openCheckout()">CHECKOUT</button>
 		</div>
 		<button class="cart-close-btn" onclick="closeCart()">×</button>
 	</div>
@@ -129,7 +128,7 @@
 			if (cachedCheckout) {
 				checkout.innerHTML = cachedCheckout;
 				checkout.classList.add('visible');
-				initCheckoutScript(); // reloads logic
+				initCheckoutScript();
 				return;
 			}
 
@@ -148,7 +147,6 @@
 		}
 
 		function initCheckoutScript() {
-			// Insert <script> manually since innerHTML won't execute them
 			const script = document.createElement('script');
 			script.textContent = `
 				document.addEventListener('DOMContentLoaded', function () {

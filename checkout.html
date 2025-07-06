@@ -6,32 +6,19 @@
   <title>Checkout - GAUVEL</title>
   <link rel="stylesheet" href="styles.css" />
   <style>
-    :root {
-      --color-white: #ffffff;
-      --color-black: #000000;
-      --color-grey-light: #f5f5f5;
-      --color-grey-medium: #d1d1d1;
-      --color-grey-dark: #666666;
-      --color-beige: #f4f1eb;
-      --color-brown: #8b7355;
-      --font-primary: 'Inter', sans-serif;
-      --font-mono: 'JetBrains Mono', monospace;
-    }
-
     body {
-      font-family: var(--font-primary);
-      background-color: var(--color-grey-light);
-      color: var(--color-grey-dark);
-      line-height: 1.6;
+      font-family: 'Inter', sans-serif;
+      background-color: #f5f5f5;
+      color: #333;
       margin-top: 80px;
-      font-size: 0.65rem;
+      font-size: 0.75rem;
     }
 
     .checkout-container {
       max-width: 900px;
       margin: 2rem auto;
       padding: 2rem;
-      background: var(--color-white);
+      background: white;
       border-radius: 12px;
       box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
     }
@@ -39,64 +26,35 @@
     .checkout-header {
       text-align: center;
       margin-bottom: 2rem;
-      padding-bottom: 1rem;
-      border-bottom: 2px solid var(--color-grey-medium);
     }
 
     .checkout-header h1 {
-      font-size: 1rem;
-      font-weight: 600;
-      color: var(--color-black);
-      margin-bottom: 0.5rem;
+      font-size: 1.5rem;
       text-transform: uppercase;
-      letter-spacing: 1px;
+      margin-bottom: 0.5rem;
     }
 
     .order-summary {
-      background: var(--color-grey-light);
-      padding: 2rem;
-      border-radius: 8px;
-      border: 1px solid var(--color-grey-medium);
-      max-width: 600px;
-      margin: 0 auto;
-    }
-
-    .order-summary h2 {
-      font-size: 0.95rem;
-      color: var(--color-black);
-      margin-bottom: 1.5rem;
-      text-transform: uppercase;
-      font-weight: 600;
+      background: #fafafa;
+      padding: 1.5rem;
+      border-radius: 10px;
+      border: 1px solid #ccc;
     }
 
     .summary-item {
       display: flex;
-      align-items: center;
-      padding: 1.5rem 0;
-      border-bottom: 1px solid var(--color-grey-medium);
-    }
-
-    .summary-item:last-child {
-      border-bottom: none;
-    }
-
-    .item-details {
-      display: flex;
-      align-items: center;
-      flex: 1;
       gap: 1rem;
+      margin-bottom: 1.5rem;
+      border-bottom: 1px solid #ccc;
+      padding-bottom: 1rem;
     }
 
     .item-image {
       width: 80px;
       height: 80px;
-      background: var(--color-white);
       border-radius: 8px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      border: 1px solid var(--color-grey-medium);
       overflow: hidden;
+      flex-shrink: 0;
     }
 
     .item-image img {
@@ -106,160 +64,90 @@
     }
 
     .item-info h3 {
-      color: var(--color-black);
-      margin-bottom: 0.25rem;
-      font-weight: 500;
-      font-size: 0.75rem;
+      font-size: 1rem;
+      margin: 0;
     }
 
     .item-info p {
-      color: var(--color-grey-dark);
-      font-size: 0.65rem;
-      margin-bottom: 0.25rem;
+      margin: 0.25rem 0;
+      font-size: 0.75rem;
     }
 
     .item-price {
-      font-size: 0.75rem;
-      font-weight: 600;
-      color: var(--color-black);
+      margin-left: auto;
+      font-weight: bold;
+      font-size: 1rem;
     }
 
     .total-section {
-      background: var(--color-white);
-      padding: 1.5rem;
-      border-radius: 8px;
-      border: 2px solid var(--color-grey-medium);
-      margin-top: 1.5rem;
+      margin-top: 2rem;
+      border-top: 2px solid #ccc;
+      padding-top: 1rem;
     }
 
     .total-row {
       display: flex;
       justify-content: space-between;
-      margin-bottom: 0.75rem;
-      padding: 0.25rem 0;
-      font-size: 0.7rem;
-    }
-
-    .total-row:last-child {
-      margin-bottom: 0;
-      padding-top: 0.75rem;
-      border-top: 2px solid var(--color-grey-medium);
-      font-weight: 600;
-      font-size: 0.8rem;
+      margin: 0.5rem 0;
     }
 
     .checkout-actions {
-      display: flex;
-      gap: 1rem;
-      justify-content: center;
       margin-top: 2rem;
-      padding-top: 2rem;
-      border-top: 2px solid var(--color-grey-medium);
+      display: flex;
+      justify-content: center;
+      gap: 1rem;
     }
 
     .checkout-btn,
     .continue-shopping {
-      padding: 0.5rem 1rem;
-      border: none;
-      border-radius: 6px;
-      font-size: 0.65rem;
-      font-weight: 600;
+      padding: 0.75rem 1.5rem;
+      font-size: 0.75rem;
       text-transform: uppercase;
-      letter-spacing: 0.5px;
-      transition: all 0.3s ease;
-      min-width: 140px;
+      border: none;
+      border-radius: 5px;
       cursor: pointer;
-      text-decoration: none;
     }
 
     .checkout-btn {
-      background: var(--color-brown);
-      color: var(--color-white);
+      background: #8b7355;
+      color: white;
     }
 
     .continue-shopping {
-      background: var(--color-grey-dark);
-      color: var(--color-white);
+      background: #444;
+      color: white;
     }
 
-    .checkout-btn:hover {
-      background: #7a634a;
-      transform: translateY(-2px);
-    }
-
-    .continue-shopping:hover {
-      background: #4f4f4f;
-      transform: translateY(-2px);
-    }
-
-    @media (max-width: 768px) {
-      .checkout-container {
-        margin: 1rem;
-        padding: 1rem;
-      }
-
-      .checkout-actions {
-        flex-direction: column;
-        align-items: center;
-      }
+    .empty-cart {
+      text-align: center;
+      padding: 2rem;
+      color: #777;
     }
   </style>
 </head>
 <body>
-   <!-- Navigation -->
-	<nav class="navbar">
-		<div class="navbar__container">
-			<a href="index.html" class="navbar__logo uppercase">GAUVEL</a>
-			<ul class="navbar__menu">
-				<li><a href="index.html" class="navbar__links uppercase">Home</a></li>
-				<li><a href="products.html" class="navbar__links uppercase">Fragrances</a></li>
-				<li><a href="contact.html" class="navbar__links uppercase">Contact</a></li>
-			</ul>
-			<div class="navbar__actions">
-				<a href="signup.html" class="auth-button uppercase" id="authButton">Sign In/Sign Up</a>
-				<button id="cartButton" class="cart-button" onclick="openCart()">
-					<img src="cart.png" alt="cart" />
-					<span id="cartCount" class="cart-count">0</span>
-				</button>
-			</div>
-		</div>
-	</nav>
-
-	<!-- Cart Panel -->
-	<div id="cartOverlay" onclick="closeCart()"></div>
-	<div class="cart-panel">
-		<h2 class="cart-title">Shopping Cart</h2>
-		<div class="cart-content"></div>
-		<div class="cart-actions">
-			<!-- FIXED BUTTON -->
-			<button class="checkout-btn-mini" id="checkoutButton">CHECKOUT</button>
-		</div>
-		<button class="cart-close-btn" onclick="closeCart()">×</button>
-	</div>
-  
   <div class="checkout-container">
     <div class="checkout-header">
       <h1>Checkout</h1>
-      <p>Review your order and complete your purchase</p>
+      <p>Review your order before completing your purchase</p>
     </div>
 
-    <div class="checkout-content">
-      <div class="order-summary">
-        <h2>Order Summary</h2>
-        <div id="order-items"></div>
-        <div class="total-section">
-          <div class="total-row">
-            <span class="total-label">Subtotal</span>
-            <span class="total-value" id="subtotal">₱0.00</span>
-          </div>
-          <div class="total-row">
-            <span class="total-label">Tax (8%)</span>
-            <span class="total-value" id="tax">₱0.00</span>
-          </div>
-          <div class="total-row">
-            <span class="total-label">Total</span>
-            <span class="total-value" id="total">₱0.00</span>
-          </div>
+    <div class="order-summary">
+      <h2>Order Summary</h2>
+      <div id="order-items"></div>
+
+      <div class="total-section">
+        <div class="total-row">
+          <span>Subtotal</span>
+          <span id="subtotal">₱0.00</span>
+        </div>
+        <div class="total-row">
+          <span>Tax (8%)</span>
+          <span id="tax">₱0.00</span>
+        </div>
+        <div class="total-row" style="font-weight: bold;">
+          <span>Total</span>
+          <span id="total">₱0.00</span>
         </div>
       </div>
     </div>
@@ -271,17 +159,21 @@
   </div>
 
   <script>
+    function formatCurrency(amount) {
+      return new Intl.NumberFormat('en-PH', {
+        style: 'currency',
+        currency: 'PHP'
+      }).format(amount);
+    }
+
     function processPayment() {
       const btn = document.querySelector('.checkout-btn');
-      const originalText = btn.textContent;
       btn.textContent = 'Processing...';
       btn.disabled = true;
 
       setTimeout(() => {
-        alert('Thank you for your purchase! Your order has been confirmed.');
-        localStorage.removeItem('cart'); // clear cart
-        btn.textContent = originalText;
-        btn.disabled = false;
+        alert('Thank you for your purchase!');
+        localStorage.removeItem('cart');
         window.location.href = 'index.html';
       }, 2000);
     }
@@ -291,51 +183,42 @@
       const cart = JSON.parse(localStorage.getItem('cart')) || [];
 
       if (cart.length === 0) {
-        orderItems.innerHTML = `
-          <div class="empty-cart">
-            <i>🛒</i>
-            <h3>Your cart is empty</h3>
-            <p>Add some products to see them here</p>
-          </div>
-        `;
+        orderItems.innerHTML = `<div class="empty-cart"><p>🛒 Your cart is empty.</p></div>`;
         return;
       }
 
       let subtotal = 0;
 
       cart.forEach(product => {
-        const itemDiv = document.createElement('div');
-        itemDiv.className = 'summary-item';
-        const totalPrice = product.price * product.quantity;
-        subtotal += totalPrice;
+        const imagePath = `res/${product.name.toUpperCase()}/1.png`;
+        const item = document.createElement('div');
+        item.className = 'summary-item';
 
-        itemDiv.innerHTML = `
-          <div class="item-details">
-            <div class="item-image">
-              ${product.image ? `<img src="${product.image}" alt="${product.name}">` : '<i>🧴</i>'}
-            </div>
-            <div class="item-info">
-              <h3>${product.name}</h3>
-              <p>Size: ${product.size}</p>
-              <p>Qty: ${product.quantity}</p>
-            </div>
+        item.innerHTML = `
+          <div class="item-image">
+            <img src="${imagePath}" alt="${product.name}">
           </div>
-          <div class="item-price">₱${totalPrice.toFixed(2)}</div>
+          <div class="item-info">
+            <h3>${product.name}</h3>
+            <p>${product.size}</p>
+            <p>${product.description || 'Eau de Parfum'}</p>
+          </div>
+          <div class="item-price">${formatCurrency(product.price * product.quantity)}</div>
         `;
 
-        orderItems.appendChild(itemDiv);
+        orderItems.appendChild(item);
+        subtotal += product.price * product.quantity;
       });
 
       const tax = subtotal * 0.08;
       const total = subtotal + tax;
 
-      document.getElementById('subtotal').textContent = `₱${subtotal.toFixed(2)}`;
-      document.getElementById('tax').textContent = `₱${tax.toFixed(2)}`;
-      document.getElementById('total').textContent = `₱${total.toFixed(2)}`;
+      document.getElementById('subtotal').textContent = formatCurrency(subtotal);
+      document.getElementById('tax').textContent = formatCurrency(tax);
+      document.getElementById('total').textContent = formatCurrency(total);
     }
 
     document.addEventListener('DOMContentLoaded', populateOrderSummary);
   </script>
 </body>
 </html>
-

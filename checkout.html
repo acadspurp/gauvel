@@ -1,12 +1,342 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Checkout - GAUVEL</title>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
   <style>
-    /* You can place your styles here */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background-color: #f8f9fa;
+      color: #333;
+      line-height: 1.6;
+    }
+
+    .checkout-container {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 2rem;
+      background: white;
+      border-radius: 12px;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+      position: relative;
+    }
+
+    .checkout-header {
+      text-align: center;
+      margin-bottom: 2rem;
+      padding-bottom: 1rem;
+      border-bottom: 2px solid #eee;
+    }
+
+    .checkout-header h1 {
+      font-size: 2rem;
+      font-weight: 600;
+      color: #333;
+      margin-bottom: 0.5rem;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    .checkout-header p {
+      color: #666;
+      font-size: 1rem;
+    }
+
+    .back-button {
+      position: absolute;
+      top: 1rem;
+      left: 1rem;
+      background: none;
+      border: none;
+      font-size: 1.5rem;
+      cursor: pointer;
+      color: #666;
+      padding: 0.5rem;
+      border-radius: 50%;
+      transition: all 0.3s ease;
+    }
+
+    .back-button:hover {
+      background: #f0f0f0;
+      color: #333;
+    }
+
+    .checkout-content {
+      display: block;
+      margin-bottom: 2rem;
+    }
+
+    .order-summary {
+      background: #f8f9fa;
+      padding: 2rem;
+      border-radius: 8px;
+      border: 1px solid #e9ecef;
+      max-width: 600px;
+      margin: 0 auto;
+    }
+
+    .order-summary h2 {
+      font-size: 1.5rem;
+      color: #333;
+      margin-bottom: 1.5rem;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      font-weight: 600;
+    }
+
+    .summary-item {
+      display: flex;
+      align-items: center;
+      padding: 1.5rem 0;
+      border-bottom: 1px solid #dee2e6;
+    }
+
+    .summary-item:last-child {
+      border-bottom: none;
+    }
+
+    .item-details {
+      display: flex;
+      align-items: center;
+      flex: 1;
+      gap: 1rem;
+    }
+
+    .item-image {
+      width: 80px;
+      height: 80px;
+      background: #ffffff;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: 1px solid #e9ecef;
+      overflow: hidden;
+    }
+
+    .item-image img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .item-image i {
+      font-size: 2rem;
+      color: #666;
+    }
+
+    .item-info h3 {
+      color: #333;
+      margin-bottom: 0.25rem;
+      font-weight: 500;
+    }
+
+    .item-info p {
+      color: #666;
+      font-size: 0.9rem;
+      margin-bottom: 0.25rem;
+    }
+
+    .item-price {
+      font-size: 1.2rem;
+      font-weight: 600;
+      color: #333;
+    }
+
+    .total-section {
+      background: #ffffff;
+      padding: 1.5rem;
+      border-radius: 8px;
+      border: 2px solid #e9ecef;
+      margin-top: 1.5rem;
+    }
+
+    .total-row {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 0.75rem;
+      padding: 0.25rem 0;
+    }
+
+    .total-row:last-child {
+      margin-bottom: 0;
+      padding-top: 0.75rem;
+      border-top: 2px solid #dee2e6;
+      font-weight: 600;
+      font-size: 1.1rem;
+    }
+
+    .total-label {
+      color: #666;
+      font-weight: 500;
+    }
+
+    .total-row:last-child .total-label {
+      color: #333;
+      font-weight: 600;
+    }
+
+    .total-value {
+      color: #333;
+      font-weight: 600;
+    }
+
+    .billing-info {
+      background: #ffffff;
+      padding: 2rem;
+      border-radius: 8px;
+      border: 1px solid #e9ecef;
+    }
+
+    .billing-info h2 {
+      font-size: 1.5rem;
+      color: #333;
+      margin-bottom: 1.5rem;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      font-weight: 600;
+    }
+
+    .form-group {
+      margin-bottom: 1.5rem;
+    }
+
+    .form-group label {
+      display: block;
+      margin-bottom: 0.5rem;
+      font-weight: 500;
+      color: #333;
+    }
+
+    .form-group input,
+    .form-group select {
+      width: 100%;
+      padding: 0.75rem;
+      border: 1px solid #ddd;
+      border-radius: 6px;
+      font-size: 1rem;
+      transition: border-color 0.3s ease;
+    }
+
+    .form-group input:focus,
+    .form-group select:focus {
+      outline: none;
+      border-color: #007bff;
+      box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.1);
+    }
+
+    .form-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+    }
+
+    .checkout-actions {
+      display: flex;
+      gap: 1rem;
+      justify-content: center;
+      margin-top: 2rem;
+      padding-top: 2rem;
+      border-top: 2px solid #eee;
+    }
+
+    .checkout-btn {
+      background: #28a745;
+      color: white;
+      padding: 1rem 2rem;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 1.1rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      transition: all 0.3s ease;
+      min-width: 200px;
+    }
+
+    .checkout-btn:hover {
+      background: #218838;
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(40, 167, 69, 0.3);
+    }
+
+    .continue-shopping {
+      background: #6c757d;
+      color: white;
+      padding: 1rem 2rem;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 1.1rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      text-decoration: none;
+      transition: all 0.3s ease;
+      min-width: 200px;
+      text-align: center;
+    }
+
+    .continue-shopping:hover {
+      background: #5a6268;
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(108, 117, 125, 0.3);
+    }
+
+    .empty-cart {
+      text-align: center;
+      padding: 3rem;
+      color: #666;
+    }
+
+    .empty-cart i {
+      font-size: 4rem;
+      color: #ddd;
+      margin-bottom: 1rem;
+    }
+
+    .empty-cart h3 {
+      font-size: 1.5rem;
+      margin-bottom: 0.5rem;
+      color: #333;
+    }
+
+    .empty-cart p {
+      margin-bottom: 2rem;
+    }
+
+    @media (max-width: 768px) {
+      .checkout-container {
+        margin: 1rem;
+        padding: 1rem;
+      }
+
+      .checkout-content {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+      }
+
+      .checkout-actions {
+        flex-direction: column;
+        align-items: center;
+      }
+
+      .form-row {
+        grid-template-columns: 1fr;
+      }
+
+      .checkout-header h1 {
+        font-size: 1.5rem;
+      }
+    }
   </style>
 </head>
 <body>
@@ -27,49 +357,144 @@
       </div>
     </div>
   </nav>
+  <div class="checkout-container">
+    <button class="back-button" onclick="goBack()" title="Go Back">
+      ← 
+    </button>
 
-<div class="checkout-container">
-  <div class="checkout-header">
-    <h1>Checkout</h1>
-    <p>Review your order before completing your purchase</p>
-  </div>
+    <div class="checkout-header">
+      <h1>Checkout</h1>
+      <p>Review your order and complete your purchase</p>
+    </div>
 
-  <div class="order-summary">
-    <h2>Order Summary</h2>
-    <div class="summary-item" id="summary-item">
-      <div class="item-details">
-        <div class="item-image" id="product-image">
-          <img src="" alt="Product" style="max-width: 100%; max-height: 100%; display: none;" />
+    <div class="checkout-content">
+      <!-- Order Summary -->
+      <div class="order-summary">
+        <h2>Order Summary</h2>
+        <div id="order-items">
+          <!-- Items will be populated here -->
         </div>
-        <div class="item-info">
-          <h3 id="product-name"></h3>
-          <p id="product-size"></p>
-          <p id="product-description"></p>
+        
+        <div class="total-section">
+          <div class="total-row">
+            <span class="total-label">Subtotal</span>
+            <span class="total-value" id="subtotal">₱0.00</span>
+          </div>
+          <div class="total-row">
+            <span class="total-label">Tax (8%)</span>
+            <span class="total-value" id="tax">₱0.00</span>
+          </div>
+          <div class="total-row">
+            <span class="total-label">Total</span>
+            <span class="total-value" id="total">₱0.00</span>
+          </div>
         </div>
       </div>
-      <div class="item-price" id="product-price"></div>
+    </div>
+
+    <div class="checkout-actions">
+      <button class="checkout-btn" onclick="processPayment()">Complete Purchase</button>
+      <button class="continue-shopping" onclick="goBack()">Continue Shopping</button>
     </div>
   </div>
 
-  <div class="total-section">
-    <div class="total-row">
-      <span class="total-label">Subtotal</span>
-      <span class="total-value" id="subtotal"></span>
-    </div>
-    <div class="total-row">
-      <span class="total-label">Tax</span>
-      <span class="total-value" id="tax"></span>
-    </div>
-    <div class="total-row">
-      <span class="total-label">Total</span>
-      <span class="total-value" id="total"></span>
-    </div>
-  </div>
+  <script>
+    function goBack() {
+      // Hide checkout and show home/about sections
+      const checkout = document.getElementById('checkoutContainer');
+      if (checkout) {
+        checkout.classList.remove('visible');
+        setTimeout(() => {
+          checkout.style.display = 'none';
+        }, 400);
+      }
+      
+      // Show home and about sections
+      const home = document.getElementById('home');
+      const about = document.getElementById('about');
+      if (home) home.style.display = 'block';
+      if (about) about.style.display = 'block';
+    }
 
-  <div class="checkout-actions">
-    <button class="checkout-btn">Proceed to Payment</button>
-    <a href="products.html" class="continue-shopping">Continue Shopping</a>
-  </div>
-</div>
+    function processPayment() {
+      // Simulate payment processing
+      const btn = document.querySelector('.checkout-btn');
+      const originalText = btn.textContent;
+      btn.textContent = 'Processing...';
+      btn.disabled = true;
+
+      setTimeout(() => {
+        alert('Thank you for your purchase! Your order has been confirmed.');
+        
+        // Clear cart data
+        localStorage.removeItem('checkoutProduct');
+        
+        // Reset button
+        btn.textContent = originalText;
+        btn.disabled = false;
+        
+        // Go back to home
+        goBack();
+      }, 2000);
+    }
+
+    function populateOrderSummary() {
+      const orderItems = document.getElementById('order-items');
+      const product = JSON.parse(localStorage.getItem('checkoutProduct'));
+      
+      if (!product) {
+        orderItems.innerHTML = `
+          <div class="empty-cart">
+            <i>🛒</i>
+            <h3>Your cart is empty</h3>
+            <p>Add some products to see them here</p>
+          </div>
+        `;
+        return;
+      }
+
+      // Create order item
+      const itemDiv = document.createElement('div');
+      itemDiv.className = 'summary-item';
+      itemDiv.innerHTML = `
+        <div class="item-details">
+          <div class="item-image" id="product-image">
+            <img src="${product.image || ''}" alt="${product.name}" style="display: ${product.image ? 'block' : 'none'};">
+            ${!product.image ? '<i>🧴</i>' : ''}
+          </div>
+          <div class="item-info">
+            <h3 id="product-name">${product.name}</h3>
+            <p id="product-size">${product.size || '50ml'}</p>
+            <p id="product-description">${product.description || 'Eau de Parfum'}</p>
+          </div>
+        </div>
+        <div class="item-price" id="product-price">₱${product.price.toFixed(2)}</div>
+      `;
+      
+      orderItems.appendChild(itemDiv);
+
+      // Calculate totals
+      const subtotal = product.price;
+      const tax = subtotal * 0.08;
+      const total = subtotal + tax;
+
+      // Update totals
+      document.getElementById('subtotal').textContent = `₱${subtotal.toFixed(2)}`;
+      document.getElementById('tax').textContent = `₱${tax.toFixed(2)}`;
+      document.getElementById('total').textContent = `₱${total.toFixed(2)}`;
+    }
+
+    // Initialize when page loads
+    document.addEventListener('DOMContentLoaded', function() {
+      populateOrderSummary();
+    });
+
+    // Also run when this content is dynamically loaded
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', populateOrderSummary);
+    } else {
+      populateOrderSummary();
+    }
+  </script>
 </body>
 </html>

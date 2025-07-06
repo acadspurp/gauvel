@@ -693,3 +693,15 @@
 	  pointer-events: auto;
 	}
 
+	.checkout-btn-mini {
+	  padding: 0.75rem 1.5rem;
+	  background-color: #000;
+	  color: #fff;
+	  border: none;
+	  text-transform: uppercase;
+	  cursor: pointer;
+	  text-decoration: none; /* removes underline */
+	  display: inline-block;
+	  border-radius: 6px;
+	}
+

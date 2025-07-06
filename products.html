@@ -861,50 +861,53 @@
 	<script src="https://www.gstatic.com/firebasejs/10.4.0/firebase-firestore-compat.js"></script>
 	<script src="script.js" defer></script>
 
-	<!--<script>
-		
-	const selectedSizes = {};
-	const selectedPrices = {};
+	<script>
+	let cachedCheckout = null;
 
-	  const selectedPrices = {
-		'rose31': ₱199.00,
-		'santal33': 182.00,
-		'bergamote22': 162.00
-	  };
+	document.getElementById('checkoutButton').addEventListener('click', openCheckout);
 
-	  function selectSize(productId, price, button) {
-		selectedPrices[productId] = price;
-		const buttons = document.querySelectorAll(`#${productId}-buttons .size-button`);
-		buttons.forEach(btn => btn.classList.remove('active'));
-		button.classList.add('active');
-	  }
+	function openCheckout() {
+		// Hide other sections
+		document.getElementById('home').style.display = 'none';
+		document.getElementById('about').style.display = 'none';
+		document.querySelector('.cart-panel').style.display = 'none';
+		document.getElementById('cartOverlay').style.display = 'none';
 
-	  function addToCart(productName, price) {
-		alert(`Added ${productName} - $${price.toFixed(2)} to cart.`);
-		// Insert your cart logic here
-	  }
-	  document.querySelectorAll('.product__card').forEach(card => {
-		const album = card.querySelector('.product__album');
-		const prevBtn = card.querySelector('.nav-arrow.prev');
-		const nextBtn = card.querySelector('.nav-arrow.next');
+		const checkout = document.getElementById('checkoutContainer');
 
-		prevBtn.addEventListener('click', () => {
-			album.scrollBy({
-				left: -album.offsetWidth,
-				behavior: 'smooth'
+		// Already loaded before
+		if (cachedCheckout) {
+			checkout.innerHTML = cachedCheckout;
+			checkout.classList.add('visible');
+			runCheckoutScripts();
+			return;
+		}
+
+		// Load checkout.html content
+		fetch('checkout.html')
+			.then(response => response.text())
+			.then(html => {
+				cachedCheckout = html;
+				checkout.innerHTML = html;
+				checkout.classList.add('visible');
+				runCheckoutScripts(); // ⬅️ This loads JS inside injected content
+			})
+			.catch(error => {
+				console.error('Failed to load checkout:', error);
+				checkout.innerHTML = "<p>Failed to load checkout page.</p>";
 			});
-		});
+	}
 
-		nextBtn.addEventListener('click', () => {
-			album.scrollBy({
-				left: album.offsetWidth,
-				behavior: 'smooth'
-			});
+	function runCheckoutScripts() {
+		// Find all <script> tags from injected checkout content
+		const scripts = document.querySelectorAll('#checkoutContainer script');
+		scripts.forEach(oldScript => {
+			const newScript = document.createElement('script');
+			newScript.text = oldScript.textContent;
+			document.body.appendChild(newScript); // Injects and runs it
+			oldScript.remove(); // Optional: clean up original script tag
 		});
-	}); 
-	
-	</script>-->
-
-	
+	}
+	</script>
 	</body>
 </html>

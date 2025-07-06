@@ -663,6 +663,7 @@
 							await db.collection("users").doc(user.uid).set({
 								name: data.name,
 								email: data.email,
+								phone: data.phone, // ✅ added this line
 								street: data.street,
 								zip: data.zip,
 								region: data.region,
@@ -670,7 +671,8 @@
 								municipality: data.municipality,
 								barangay: data.barangay,
 								createdAt: firebase.firestore.FieldValue.serverTimestamp()
-							});
+								});
+
 
 							showPopup("Account Created Successfully", "success");
 							setTimeout(() => {

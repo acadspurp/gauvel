@@ -58,14 +58,16 @@
             height: 80px;
         }
 
-        .navbar__logo {
-            font-family: var(--font-mono);
-            font-size: 1.1rem;
-            font-weight: 400;
-            letter-spacing: 1px;
-            color: var(--color-black);
-            text-decoration: none;
-        }
+	.navbar__logo {
+	    font-family: var(--font-primary); 
+	    font-size: 0.9rem; 
+	    font-weight: 300;
+	    letter-spacing: 1px;
+	    color: var(--color-black);
+	    text-decoration: none;
+	    text-transform: uppercase; 
+	}
+
 
         .navbar__menu {
             display: flex;

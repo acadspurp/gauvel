@@ -877,8 +877,16 @@
 
 	<script type="module">
 		import { openCheckout } from './checkout-loader.js';
-	
 		document.getElementById('checkoutButton').addEventListener('click', openCheckout);
+		function scrollImages(direction) {
+		const container = document.getElementById('imageCarousel');
+		const imageWidth = container.querySelector('img').clientWidth;
+		
+		container.scrollBy({
+		      left: direction * imageWidth,
+		      behavior: 'smooth'
+		    });
+		  }
 	</script>
 
 	</body>

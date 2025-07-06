@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Checkout - GAUVEL</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        /* Styles omitted for brevity, same as original */
+    </style>
+</head>
+<body>
+	<nav class="navbar">
+        <div class="navbar__container">
+            <a href="index.html" class="navbar__logo uppercase">GAUVEL</a>
+            <ul class="navbar__menu">
+                <li><a href="index.html" class="navbar__links uppercase">Home</a></li>
+                <li><a href="products.html" class="navbar__links uppercase">Fragrances</a></li>
+                <li><a href="contact.html" class="navbar__links uppercase">Contact</a></li>
+			</ul>
+                    <div class="navbar__actions">
+						<a href="signup.html" class="auth-button uppercase" id="authButton">Sign In/Sign Up</a>
+						<button id="cartButton" class="cart-button" onclick="openCart()">
+						<img src="cart.png" alt="cart">
+						<span id="cartCount" class="cart-count">0</span>
+						</button>
+					</div>
+        </div>
+    </nav>
+    <div class="checkout-container">
+        <div class="checkout-header">
+            <h1>Checkout</h1>
+            <p>Review your order before completing your purchase</p>
+        </div>
+
+        <div class="order-summary">
+            <h2>Order Summary</h2>
+            <div class="summary-item" id="summary-item">
+                <div class="item-details">
+                    <div class="item-image" id="product-image">
+                        <img src="" alt="Product" style="max-width: 100%; max-height: 100%; display: none;">
+                    </div>
+                    <div class="item-info">
+                        <h3 id="product-name"></h3>
+                        <p id="product-size"></p>
+                        <p id="product-description"></p>
+                    </div>
+                </div>
+                <div class="item-price" id="product-price"></div>
+            </div>
+        </div>
+
+        <div class="total-section">
+            <div class="total-row">
+                <span class="total-label">Subtotal</span>
+                <span class="total-value" id="subtotal"></span>
+            </div>
+            <div class="total-row">
+                <span class="total-label">Tax</span>
+                <span class="total-value" id="tax"></span>
+            </div>
+            <div class="total-row">
+                <span class="total-label">Total</span>
+                <span class="total-value" id="total"></span>
+            </div>
+        </div>
+
+        <div class="checkout-actions">
+            <button class="checkout-btn" onclick="proceedToPayment()">
+                Proceed to Payment
+            </button>
+            <a href="/Product.html" class="continue-shopping">Continue Shopping</a>
+        </div>
+    </div>
+
+    <script>
+        function proceedToPayment() {
+            alert('Redirecting to secure payment...');
+        }
+
+        document.addEventListener('DOMContentLoaded', function () {
+            const product = JSON.parse(localStorage.getItem('checkoutProduct'));
+            if (!product) return;
+
+            document.getElementById('product-name').textContent = product.name;
+            document.getElementById('product-size').textContent = product.size;
+            document.getElementById('product-description').textContent = product.description;
+            document.getElementById('product-price').textContent = `$${product.price.toFixed(2)}`;
+
+            const imageElem = document.querySelector('#product-image img');
+            if (product.image) {
+                imageElem.src = product.image;
+                imageElem.style.display = 'block';
+            }
+
+            const tax = product.price * 0.08; // example 8% tax
+            const total = product.price + tax;
+
+            document.getElementById('subtotal').textContent = `$${product.price.toFixed(2)}`;
+            document.getElementById('tax').textContent = `$${tax.toFixed(2)}`;
+            document.getElementById('total').textContent = `$${total.toFixed(2)}`;
+        });
+	</script>
+	<script src="https://www.gstatic.com/firebasejs/10.4.0/firebase-app-compat.js"></script>
+	<script src="https://www.gstatic.com/firebasejs/10.4.0/firebase-auth-compat.js"></script>
+	<script src="https://www.gstatic.com/firebasejs/10.4.0/firebase-firestore-compat.js"></script>
+	<script src="script.js" defer></script>
+
+
+</body>
+</html>

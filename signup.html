@@ -1,0 +1,704 @@
+	<!DOCTYPE html>
+	<html lang="en">
+	<head>
+	  <meta charset="UTF-8" />
+	  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+	  <title>Login/Signup</title>
+	  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+	  <link rel="stylesheet" href="styles.css" />
+	  <script src="script.js" defer></script>
+
+	<style>
+	 * {
+			margin: 0;
+			padding: 0;
+			box-sizing: border-box;
+		}
+
+		body {
+			font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+			background: linear-gradient(135deg, #f5f5f0 0%, #e8e8e0 100%);
+			min-height: 100vh;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			padding: 20px;
+			position: relative;
+			overflow-x: hidden;
+		}
+
+		body::before {
+			content: '';
+			position: fixed;
+			top: 0;
+			left: 0;
+			width: 100%;
+			height: 100%;
+			background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grain" width="100" height="100" patternUnits="userSpaceOnUse"><circle cx="25" cy="25" r="0.5" fill="%23000" opacity="0.02"/><circle cx="75" cy="75" r="0.3" fill="%23000" opacity="0.015"/><circle cx="50" cy="10" r="0.4" fill="%23000" opacity="0.01"/></pattern></defs><rect width="100" height="100" fill="url(%23grain)"/></svg>');
+			pointer-events: none;
+			z-index: 1;
+		}
+
+		.container {
+			background: rgba(255, 255, 255, 0.95);
+			backdrop-filter: blur(20px);
+			border: 1px solid rgba(0, 0, 0, 0.08);
+			border-radius: 2px;
+			box-shadow: 
+				0 25px 50px -12px rgba(0, 0, 0, 0.08),
+				0 0 0 1px rgba(255, 255, 255, 0.9) inset;
+			width: 100%;
+			max-width: 600px;
+			padding: 60px 50px;
+			position: relative;
+			z-index: 2;
+			margin-top: 90px;
+		}
+
+		.nav-tabs {
+			display: flex;
+			margin-bottom: 40px;
+			border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+		}
+
+		.nav-tab {
+			flex: 1;
+			padding: 16px 0;
+			border: none;
+			background: none;
+			font-size: 13px;
+			font-weight: 400;
+			letter-spacing: 1px;
+			color: #999;
+			text-transform: uppercase;
+			cursor: pointer;
+			transition: all 0.3s ease;
+			position: relative;
+			border-bottom: 2px solid transparent;
+		}
+
+		.nav-tab:hover {
+			color: #333;
+		}
+
+		.nav-tab.active {
+			color: #1a1a1a;
+			border-bottom-color: #1a1a1a;
+		}
+
+		.form-section {
+			display: none;
+			animation: fadeIn 0.5s ease;
+		}
+
+		.form-section.active {
+			display: block;
+		}
+
+		@keyframes fadeIn {
+			from { opacity: 0; transform: translateY(10px); }
+			to { opacity: 1; transform: translateY(0); }
+		}
+
+		.form-columns {
+			display: flex;
+			gap: 40px;
+			margin-bottom: 20px;
+		}
+
+		.form-column {
+			flex: 1;
+		}
+
+		.signup-form .form-group {
+			margin-bottom: 20px;
+		}
+
+		.form-group {
+			margin-bottom: 24px;
+		}
+
+		.form-row {
+			display: flex;
+			gap: 16px;
+			margin-bottom: 24px;
+		}
+
+		.form-row .form-group {
+			flex: 1;
+			margin-bottom: 0;
+		}
+
+		label {
+			display: block;
+			font-size: 11px;
+			font-weight: 500;
+			letter-spacing: 1px;
+			color: #666;
+			text-transform: uppercase;
+			margin-bottom: 8px;
+		}
+
+		input, select {
+			width: 100%;
+			padding: 16px 0;
+			border: none;
+			border-bottom: 1px solid rgba(0, 0, 0, 0.15);
+			background: transparent;
+			font-size: 15px;
+			font-weight: 400;
+			color: #1a1a1a;
+			transition: all 0.3s ease;
+			font-family: inherit;
+		}
+
+		input:focus, select:focus {
+			outline: none;
+			border-bottom-color: #1a1a1a;
+			border-bottom-width: 2px;
+		}
+
+		input::placeholder {
+			color: #aaa;
+			font-weight: 300;
+		}
+
+		select {
+			cursor: pointer;
+			color: #666;
+		}
+
+		select:focus {
+			color: #1a1a1a;
+		}
+
+		.btn {
+			width: 100%;
+			padding: 18px;
+			background: #1a1a1a;
+			color: white;
+			border: none;
+			font-size: 12px;
+			font-weight: 500;
+			letter-spacing: 2px;
+			text-transform: uppercase;
+			cursor: pointer;
+			transition: all 0.3s ease;
+			margin-top: 30px;
+			position: relative;
+			overflow: hidden;
+		}
+
+		.btn:hover {
+			background: #333;
+			transform: translateY(-1px);
+			box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+		}
+
+		.btn:active {
+			transform: translateY(0);
+		}
+
+		.popup {
+			position: fixed;
+			top: 30px;
+			right: 30px;
+			padding: 20px 30px;
+			background: rgba(255, 255, 255, 0.95);
+			backdrop-filter: blur(20px);
+			border: 1px solid rgba(0, 0, 0, 0.1);
+			border-radius: 2px;
+			font-size: 12px;
+			font-weight: 500;
+			letter-spacing: 1px;
+			text-transform: uppercase;
+			box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+			transform: translateX(400px);
+			opacity: 0;
+			transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+			z-index: 1000;
+		}
+
+		.popup.show {
+			transform: translateX(0);
+			opacity: 1;
+		}
+
+		.popup.success {
+			color: #2d5a27;
+			border-left: 3px solid #2d5a27;
+		}
+
+		.popup.error {
+			color: #8b2635;
+			border-left: 3px solid #8b2635;
+		}
+
+		.form-section h2 {
+			font-size: 20px;
+			font-weight: 300;
+			letter-spacing: 1px;
+			color: #1a1a1a;
+			margin-bottom: 30px;
+			text-align: center;
+			text-transform: uppercase;
+		}
+
+		@media (max-width: 600px) {
+			.container {
+				padding: 30px 20px;
+				margin: 0 auto;
+				max-height: 90vh;
+				overflow-y: auto;
+			}
+
+			.form-columns {
+				flex-direction: column;
+				gap: 0;
+			}
+
+			.form-row {
+				flex-direction: column;
+				gap: 0;
+			}
+
+			.form-row .form-group {
+				margin-bottom: 24px;
+			}
+
+			.brand h1 {
+				font-size: 24px;
+				letter-spacing: 2px;
+			}
+
+			.popup {
+				right: 20px;
+				top: 20px;
+				padding: 16px 24px;
+			}
+		}
+	</style>
+	</head>
+
+	<body>
+		   <nav class="navbar">
+			<div class="navbar__container">
+				<a href="index.html" class="navbar__logo uppercase">GAUVEL</a>
+				<ul class="navbar__menu">
+					<li><a href="index.html" class="navbar__links uppercase">Home</a></li>
+					<li><a href="products.html" class="navbar__links uppercase">Fragrances</a></li>
+					<li><a href="contact.html" class="navbar__links uppercase">Contact</a></li>
+				</ul>
+					<div class="navbar__actions">
+						<a href="signup.html" class="auth-button uppercase" id="authButton">Sign In/Sign Up</a>
+						<button id="cartButton" class="cart-button" onclick="openCart()">
+						<img src="cart.png" alt="cart">
+						<span id="cartCount" class="cart-count">0</span>
+						</button>
+					</div>
+			</div>
+		</nav>
+		
+		<div class="container">
+
+			<div class="nav-tabs">
+				<button class="nav-tab active" onclick="switchForm('signin', event)">Sign In</button>
+				<button class="nav-tab" onclick="switchForm('signup', event)">Sign Up</button>
+			</div>
+
+			<div id="signin" class="form-section active">
+				<h2>Welcome Back</h2>
+				<form id="signin-form">
+					<div class="form-group">
+						<label for="signin-email">Email</label>
+						<input type="email" id="signin-email" name="email" required>
+					</div>
+					<div class="form-group">
+						<label for="signin-password">Password</label>
+						<input type="password" id="signin-password" name="password" required>
+					</div>
+					<button type="submit" class="btn">Sign In</button>
+				</form>
+			</div>
+
+			<div id="signup" class="form-section">
+				<h2>Create Account</h2>
+				<form id="signup-form"class="signup-form">
+					<div class="form-columns">
+						<div class="form-column">
+							<div class="form-group">
+								<label for="signup-name">Full Name</label>
+								<input type="text" id="signup-name" name="name" required>
+							</div>
+							<div class="form-group">
+								<label for="signup-email">Email</label>
+								<input type="email" id="signup-email" name="email" required>
+							</div>
+							<div class="form-group">
+								<label for="signup-password">Password</label>
+								<input type="password" id="signup-password" name="password" required>
+							</div>
+							<div class="form-group">
+								<label for="street">Street Address</label>
+								<input type="text" id="street" name="street" required>
+							</div>
+							<div class="form-group">
+								<label for="zip">Postal Code</label>
+								<input type="text" id="zip" name="zip" required>
+							</div>
+						</div>
+						<div class="form-column">
+							<div class="form-group">
+								<label for="region">Region</label>
+								<select id="region" name="region" required>
+									<option value="">Select Region</option>
+								</select>
+							</div>
+							<div class="form-group">
+								<label for="province">Province</label>
+								<select id="province" name="province" required>
+									<option value="">Select Province</option>
+								</select>
+							</div>
+							<div class="form-group">
+								<label for="district">City/Municipality</label>
+								<select id="district" name="municipality" required>
+									<option value="">Select City</option>
+								</select>
+							</div>
+							<div class="form-group">
+								<label for="barangay">Barangay</label>
+								<select id="barangay" name="barangay" required>
+									<option value="">Select Barangay</option>
+								</select>
+							</div>
+						</div>
+					</div>
+					<button type="submit" class="btn">Create Account</button>
+				</form>
+			</div>
+		</div>
+
+		<div id="popup" class="popup"></div>
+
+		<div id="cartOverlay" onclick="closeCart()"></div>
+		<div class="cart-panel">
+			<h2 class="cart-title">Shopping Cart</h2>
+			<div class="cart-content">Your cart is empty</div>
+			<div class="cart-actions">
+				<button class="checkout-btn-mini">CHECKOUT</button>
+			</div>
+			<button class="cart-close-btn" onclick="closeCart()">×</button>
+		</div>
+
+		<script>
+			const BASE_URL = "https://psgc.gitlab.io/api";
+
+			function switchForm(formId, event) {
+				// Remove active class from all sections and tabs
+				document.querySelectorAll('.form-section').forEach(section => {
+					section.classList.remove('active');
+				});
+				document.querySelectorAll('.nav-tab').forEach(tab => {
+					tab.classList.remove('active');
+				});
+				
+				// Add active class to selected form and tab
+				document.getElementById(formId).classList.add('active');
+				if (event) event.target.classList.add('active');
+			}
+
+			function showPopup(message, type) {
+				const popup = document.getElementById("popup");
+				popup.textContent = message;
+				popup.className = `popup ${type}`;
+				popup.classList.add('show');
+				
+				setTimeout(() => {
+					popup.classList.remove('show');
+				}, 3000);
+			}
+
+			// Cart functions
+			function openCart() {
+				document.getElementById('cartOverlay').classList.add('open');
+				document.querySelector('.cart-panel').classList.add('open');
+			}
+
+			function closeCart() {
+				document.getElementById('cartOverlay').classList.remove('open');
+				document.querySelector('.cart-panel').classList.remove('open');
+			}
+
+			// Philippine address API functions
+			async function populateRegions() {
+				try {
+					const res = await fetch(`${BASE_URL}/regions/`);
+					const regions = await res.json();
+					const select = document.getElementById('region');
+					select.innerHTML = '<option value="">Select Region</option>';
+					regions.forEach(region => {
+						const option = document.createElement('option');
+						option.value = region.code;
+						option.textContent = region.name;
+						select.appendChild(option);
+					});
+				} catch (error) {
+					console.error('Error loading regions:', error);
+					showPopup('Failed to load regions', 'error');
+				}
+			}
+
+			async function populateProvinces(regionCode) {
+				const provinceSelect = document.getElementById('province');
+				const districtSelect = document.getElementById('district');
+				const barangaySelect = document.getElementById('barangay');
+
+				provinceSelect.innerHTML = '<option value="">Select Province</option>';
+				districtSelect.innerHTML = '<option value="">Select City/Municipality</option>';
+				barangaySelect.innerHTML = '<option value="">Select Barangay</option>';
+
+				try {
+					const provRes = await fetch(`${BASE_URL}/regions/${regionCode}/provinces/`);
+					const provinces = await provRes.json();
+
+					if (provinces.length === 0) {
+						provinceSelect.innerHTML = '<option value="">N/A</option>';
+						const citiesRes = await fetch(`${BASE_URL}/regions/${regionCode}/cities-municipalities/`);
+						const cities = await citiesRes.json();
+						districtSelect.innerHTML = '<option value="">Select City/Municipality</option>';
+						cities.forEach(city => {
+							const option = document.createElement('option');
+							option.value = city.code;
+							option.textContent = city.name;
+							districtSelect.appendChild(option);
+						});
+					} else {
+						provinces.forEach(province => {
+							const option = document.createElement('option');
+							option.value = province.code;
+							option.textContent = province.name;
+							provinceSelect.appendChild(option);
+						});
+					}
+				} catch (error) {
+					console.error('Error loading provinces:', error);
+					showPopup('Failed to load provinces', 'error');
+				}
+			}
+
+			async function populateMunicipalities(provinceCode) {
+				try {
+					const res = await fetch(`${BASE_URL}/provinces/${provinceCode}/cities-municipalities/`);
+					const cities = await res.json();
+					const select = document.getElementById('district');
+					select.innerHTML = '<option value="">Select City/Municipality</option>';
+					cities.forEach(city => {
+						const option = document.createElement('option');
+						option.value = city.code;
+						option.textContent = city.name;
+						select.appendChild(option);
+					});
+				} catch (error) {
+					console.error('Error loading municipalities:', error);
+					showPopup('Failed to load cities/municipalities', 'error');
+				}
+			}
+
+			async function populateBarangays(municipalityCode) {
+				try {
+					const res = await fetch(`${BASE_URL}/cities-municipalities/${municipalityCode}/barangays/`);
+					const barangays = await res.json();
+					const select = document.getElementById('barangay');
+					select.innerHTML = '<option value="">Select Barangay</option>';
+					barangays.forEach(barangay => {
+						const option = document.createElement('option');
+						option.value = barangay.code;
+						option.textContent = barangay.name;
+						select.appendChild(option);
+					});
+				} catch (error) {
+					console.error('Error loading barangays:', error);
+					showPopup('Failed to load barangays', 'error');
+				}
+			}
+
+			// Function to update navbar based on authentication state
+			async function updateNavbar(user) {
+				const authButton = document.getElementById('authButton');
+				
+				if (user) {
+					try {
+						// Get user display name from Firestore
+						const userDoc = await db.collection("users").doc(user.uid).get();
+						let displayName = user.email.split('@')[0];
+						
+						if (userDoc.exists) {
+							const userData = userDoc.data();
+							displayName = userData.name ? userData.name.split(' ')[0] : displayName;
+						}
+						
+						// Update button to show profile
+						authButton.innerHTML = `
+							<span style="margin-right: 8px;">👤</span>
+							<span>${displayName}</span>
+						`;
+						authButton.href = 'profile.html';
+						authButton.classList.remove('auth-button');
+						authButton.classList.add('profile-button');
+						authButton.style.display = 'flex';
+						authButton.style.alignItems = 'center';
+						authButton.style.gap = '8px';
+					} catch (error) {
+						console.error('Error updating navbar:', error);
+					}
+				} else {
+					// User is not logged in - show sign in/sign up button
+					authButton.innerHTML = 'Sign In/Sign Up';
+					authButton.href = 'signup.html';
+					authButton.classList.remove('profile-button');
+					authButton.classList.add('auth-button');
+					authButton.style.display = 'inline-block';
+				}
+			}
+
+			document.addEventListener('DOMContentLoaded', () => {
+				// Initialize address dropdowns
+				populateRegions();
+
+				// Dropdown listeners
+				document.getElementById('region').addEventListener('change', function () {
+					const regionCode = this.value;
+					if (regionCode) {
+						populateProvinces(regionCode);
+					} else {
+						resetDropdowns(['province', 'district', 'barangay']);
+					}
+				});
+
+				document.getElementById('province').addEventListener('change', function () {
+					const provinceCode = this.value;
+					if (provinceCode) {
+						populateMunicipalities(provinceCode);
+					} else {
+						resetDropdowns(['district', 'barangay']);
+					}
+				});
+
+				document.getElementById('district').addEventListener('change', function () {
+					const municipalityCode = this.value;
+					if (municipalityCode) {
+						populateBarangays(municipalityCode);
+					} else {
+						resetDropdowns(['barangay']);
+					}
+				});
+
+				function resetDropdowns(ids) {
+					ids.forEach(id => {
+						const el = document.getElementById(id);
+						if (el) el.innerHTML = `<option value="">Select ${capitalize(id)}</option>`;
+					});
+				}
+
+				function capitalize(s) {
+					return s.charAt(0).toUpperCase() + s.slice(1);
+				}
+			});
+		</script>
+
+		<!-- Firebase SDKs -->
+		<script src="https://www.gstatic.com/firebasejs/10.4.0/firebase-app-compat.js"></script>
+		<script src="https://www.gstatic.com/firebasejs/10.4.0/firebase-auth-compat.js"></script>
+		<script src="https://www.gstatic.com/firebasejs/10.4.0/firebase-firestore-compat.js"></script>
+
+		<script>
+			// ✅ Initialize Firebase
+			const firebaseConfig = {
+				apiKey: "AIzaSyD9aQYJduGX-IBnCGvxYBQHCrZH05GAhoY",
+				authDomain: "gauvelfragrance-80197.firebaseapp.com",
+				projectId: "gauvelfragrance-80197",
+				storageBucket: "gauvelfragrance-80197.firebasestorage.app",
+				messagingSenderId: "116770427568",
+				appId: "1:116770427568:web:16373de8c306a1b771e175",
+				measurementId: "G-EG12NGJSYS"
+			};
+
+			firebase.initializeApp(firebaseConfig);
+			const auth = firebase.auth();
+			const db = firebase.firestore();
+
+			// ✅ Wait for DOM before accessing forms
+			document.addEventListener('DOMContentLoaded', () => {
+				const signupForm = document.querySelector('#signup-form');
+				const signinForm = document.querySelector('#signin-form');
+
+				// Authentication state listener
+				auth.onAuthStateChanged(async (user) => {
+					await updateNavbar(user);
+					
+					// If user is already logged in, redirect to profile
+					if (user) {
+						showPopup('Already logged in. Redirecting to profile...', 'success');
+						setTimeout(() => {
+							window.location.href = 'profile.html';
+						}, 1500);
+					}
+				});
+
+				if (signupForm) {
+					signupForm.addEventListener('submit', async function (e) {
+						e.preventDefault();
+						const formData = new FormData(this);
+						const data = Object.fromEntries(formData.entries());
+
+						try {
+							const userCredential = await auth.createUserWithEmailAndPassword(data.email, data.password);
+							const user = userCredential.user;
+
+							await db.collection("users").doc(user.uid).set({
+								name: data.name,
+								email: data.email,
+								street: data.street,
+								zip: data.zip,
+								region: data.region,
+								province: data.province,
+								municipality: data.municipality,
+								barangay: data.barangay,
+								createdAt: firebase.firestore.FieldValue.serverTimestamp()
+							});
+
+							showPopup("Account Created Successfully", "success");
+							setTimeout(() => {
+								window.location.href = 'profile.html';
+							}, 1500);
+						} catch (error) {
+							console.error("Signup Error:", error);
+							showPopup("Signup failed: " + error.message, "error");
+						}
+					});
+				}
+
+				if (signinForm) {
+					signinForm.addEventListener('submit', async function (e) {
+						e.preventDefault();
+						const formData = new FormData(this);
+						const data = Object.fromEntries(formData.entries());
+
+						try {
+							await auth.signInWithEmailAndPassword(data.email, data.password);
+							showPopup("Login Successful", "success");
+							setTimeout(() => {
+								window.location.href = 'profile.html';
+							}, 1500);
+						} catch (error) {
+							console.error("Signin Error:", error);
+							showPopup("Sign in failed: " + error.message, "error");
+						}
+					});
+				}
+			});
+		</script>
+
+	</body>
+	</html>

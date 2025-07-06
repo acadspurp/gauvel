@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<title>Gauvel</title>
+
+	<!-- Fonts -->
+	<link rel="preconnect" href="https://fonts.googleapis.com" />
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+	<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@300;400;500&display=swap" rel="stylesheet" />
+
+	<!-- Styles -->
+	<link rel="stylesheet" href="styles.css" />
+
+</head>
+<body>
+	<!-- Navigation -->
+	<nav class="navbar">
+		<div class="navbar__container">
+			<a href="#home" class="navbar__logo uppercase">GAUVEL</a>
+			<ul class="navbar__menu">
+				<li><a href="#home" class="navbar__links uppercase">Home</a></li>
+				<li><a href="products.html" class="navbar__links uppercase">Fragrances</a></li>
+				<li><a href="contact.html" class="navbar__links uppercase">Contact</a></li>
+			</ul>
+			<div class="navbar__actions">
+				<a href="signup.html" class="auth-button uppercase" id="authButton">Sign In/Sign Up</a>
+				<button id="cartButton" class="cart-button" onclick="openCart()">
+					<img src="cart.png" alt="cart" />
+					<span id="cartCount" class="cart-count">0</span>
+				</button>
+			</div>
+		</div>
+	</nav>
+
+	<div id="cartOverlay" onclick="closeCart()"></div>
+<div class="cart-panel">
+	<h2 class="cart-title">Shopping Cart</h2>
+	<div class="cart-content"></div>
+	<div class="cart-actions">
+		<button class="checkout-btn-mini">CHECKOUT</button>
+	</div>
+	<button class="cart-close-btn" onclick="closeCart()">×</button>
+</div>
+
+
+	<!-- Home Section -->
+	<section id="home" class="hero">
+		<div class="hero__content">
+			<p class="hero__subtitle uppercase mono">EST. 2022</p>
+			<h1 class="hero__title">GAUVEL</h1>
+			<p class="hero__description">
+				A perfume brand that is inspired by<br />
+				philosophy, craftsmanship, and exclusivity.
+			</p>
+		</div>
+	</section>
+
+	<!-- About Section -->
+	<section id="about" class="about">
+		<div class="section-container">
+			<div class="about__content">
+				<div class="about__text">
+					<p class="about__subtitle uppercase mono">PHILOSOPHY</p>
+					<h2 class="about__title">Perfumery with Purpose </h2>
+					<p class="about__description">
+						At GAUVEL, we see fragrance as more than something you wear — it’s a quiet companion in your daily 
+						life. A way to care for yourself, to express your inner world, and to stay connected to what 
+						matters most. 
+					</p>
+					<p class="about__description">
+						Every scent in our collection, whether sweet, fresh, earthy, or light, is chosen with intention. 
+						We offer more than perfume; we offer reminders. To slow down. To choose with care. To honor 
+						what resonates with you. 
+					</p>
+				</div>
+				<div class="about__manifesto">
+					<h3 class="manifesto__title uppercase mono">OUR MANIFESTO</h3>
+					<p class="manifesto__text">
+						"Luxury is not about the price. It’s about choosing what aligns with you, thoughtfully, creatively, 
+						and with purpose. GAUVEL exists to support that journey, offering scents that feel like a form 
+						of self-care, a creative expression, and a guide toward greater awareness. 
+						GAUVEL Fragrance that supports, inspires, and reflects."
+					</p>
+				</div>
+			</div>
+		</div>
+	</section>
+	
+	<script src="https://www.gstatic.com/firebasejs/10.4.0/firebase-app-compat.js"></script>
+	<script src="https://www.gstatic.com/firebasejs/10.4.0/firebase-auth-compat.js"></script>
+	<script src="https://www.gstatic.com/firebasejs/10.4.0/firebase-firestore-compat.js"></script>
+	<script src="script.js" defer></script>
+
+
+
+</body>
+</html>

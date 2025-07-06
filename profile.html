@@ -183,5 +183,53 @@
       if (doc.exists) updateProfileUI(doc.data());
     });
   </script>
+  	<script>
+	let cachedCheckout = null;
+
+	document.getElementById('checkoutButton').addEventListener('click', openCheckout);
+
+	function openCheckout() {
+		// Hide other sections
+		document.getElementById('home').style.display = 'none';
+		document.getElementById('about').style.display = 'none';
+		document.querySelector('.cart-panel').style.display = 'none';
+		document.getElementById('cartOverlay').style.display = 'none';
+
+		const checkout = document.getElementById('checkoutContainer');
+
+		// Already loaded before
+		if (cachedCheckout) {
+			checkout.innerHTML = cachedCheckout;
+			checkout.classList.add('visible');
+			runCheckoutScripts();
+			return;
+		}
+
+		// Load checkout.html content
+		fetch('checkout.html')
+			.then(response => response.text())
+			.then(html => {
+				cachedCheckout = html;
+				checkout.innerHTML = html;
+				checkout.classList.add('visible');
+				runCheckoutScripts(); // ⬅️ This loads JS inside injected content
+			})
+			.catch(error => {
+				console.error('Failed to load checkout:', error);
+				checkout.innerHTML = "<p>Failed to load checkout page.</p>";
+			});
+	}
+
+	function runCheckoutScripts() {
+		// Find all <script> tags from injected checkout content
+		const scripts = document.querySelectorAll('#checkoutContainer script');
+		scripts.forEach(oldScript => {
+			const newScript = document.createElement('script');
+			newScript.text = oldScript.textContent;
+			document.body.appendChild(newScript); // Injects and runs it
+			oldScript.remove(); // Optional: clean up original script tag
+		});
+	}
+	</script>
 </body>
 </html>

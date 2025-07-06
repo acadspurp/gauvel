@@ -13,6 +13,20 @@
 	<!-- Styles -->
 	<link rel="stylesheet" href="styles.css" />
 
+	<style>
+		/* SPA transition styling */
+		#checkoutContainer {
+			transition: all 0.4s ease;
+			opacity: 0;
+			transform: translateY(30px);
+			display: none;
+		}
+		#checkoutContainer.visible {
+			display: block;
+			opacity: 1;
+			transform: translateY(0);
+		}
+	</style>
 </head>
 <body>
 	<!-- Navigation -->
@@ -35,15 +49,14 @@
 	</nav>
 
 	<div id="cartOverlay" onclick="closeCart()"></div>
-<div class="cart-panel">
-	<h2 class="cart-title">Shopping Cart</h2>
-	<div class="cart-content"></div>
-	<div class="cart-actions">
-		<button class="checkout-btn-mini">CHECKOUT</button>
+	<div class="cart-panel">
+		<h2 class="cart-title">Shopping Cart</h2>
+		<div class="cart-content"></div>
+		<div class="cart-actions">
+			<button class="checkout-btn-mini" onclick="openCheckout()">CHECKOUT</button>
+		</div>
+		<button class="cart-close-btn" onclick="closeCart()">×</button>
 	</div>
-	<button class="cart-close-btn" onclick="closeCart()">×</button>
-</div>
-
 
 	<!-- Home Section -->
 	<section id="home" class="hero">
@@ -63,7 +76,7 @@
 			<div class="about__content">
 				<div class="about__text">
 					<p class="about__subtitle uppercase mono">PHILOSOPHY</p>
-					<h2 class="about__title">Perfumery with Purpose </h2>
+					<h2 class="about__title">Perfumery with Purpose</h2>
 					<p class="about__description">
 						At GAUVEL, we see fragrance as more than something you wear — it’s a quiet companion in your daily 
 						life. A way to care for yourself, to express your inner world, and to stay connected to what 
@@ -87,13 +100,79 @@
 			</div>
 		</div>
 	</section>
-	
+
+	<!-- Checkout content dynamically loaded here -->
+	<div id="checkoutContainer"></div>
+
+	<!-- Firebase + Script -->
 	<script src="https://www.gstatic.com/firebasejs/10.4.0/firebase-app-compat.js"></script>
 	<script src="https://www.gstatic.com/firebasejs/10.4.0/firebase-auth-compat.js"></script>
 	<script src="https://www.gstatic.com/firebasejs/10.4.0/firebase-firestore-compat.js"></script>
 	<script src="script.js" defer></script>
 
+	<!-- SPA / Checkout loader script -->
+	<script>
+		let cachedCheckout = null;
 
+		function openCheckout() {
+			// Hide other sections
+			document.getElementById('home').style.display = 'none';
+			document.getElementById('about').style.display = 'none';
+			document.querySelector('.cart-panel').style.display = 'none';
+			document.getElementById('cartOverlay').style.display = 'none';
 
+			const checkout = document.getElementById('checkoutContainer');
+
+			// Load once and reuse (caching)
+			if (cachedCheckout) {
+				checkout.innerHTML = cachedCheckout;
+				checkout.classList.add('visible');
+				initCheckoutScript(); // reloads logic
+				return;
+			}
+
+			fetch('checkout.html')
+				.then(response => response.text())
+				.then(html => {
+					cachedCheckout = html;
+					checkout.innerHTML = html;
+					checkout.classList.add('visible');
+					initCheckoutScript();
+				})
+				.catch(error => {
+					console.error('Failed to load checkout:', error);
+					checkout.innerHTML = "<p>Failed to load checkout page.</p>";
+				});
+		}
+
+		function initCheckoutScript() {
+			// Insert <script> manually since innerHTML won't execute them
+			const script = document.createElement('script');
+			script.textContent = `
+				document.addEventListener('DOMContentLoaded', function () {
+					const product = JSON.parse(localStorage.getItem('checkoutProduct'));
+					if (!product) return;
+					document.getElementById('product-name').textContent = product.name;
+					document.getElementById('product-size').textContent = product.size;
+					document.getElementById('product-description').textContent = product.description;
+					document.getElementById('product-price').textContent = \`₱\${product.price.toFixed(2)}\`;
+					const imageElem = document.querySelector('#product-image img');
+					if (product.image) {
+						imageElem.src = product.image;
+						imageElem.style.display = 'block';
+					}
+					const tax = product.price * 0.08;
+					const total = product.price + tax;
+					document.getElementById('subtotal').textContent = \`₱\${product.price.toFixed(2)}\`;
+					document.getElementById('tax').textContent = \`₱\${tax.toFixed(2)}\`;
+					document.getElementById('total').textContent = \`₱\${total.toFixed(2)}\`;
+				});
+				function proceedToPayment() {
+					alert('Redirecting to secure payment...');
+				}
+			`;
+			document.body.appendChild(script);
+		}
+	</script>
 </body>
 </html>

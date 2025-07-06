@@ -48,12 +48,12 @@
 		</div>
 	</nav>
 
+	<!-- Cart Panel -->
 	<div id="cartOverlay" onclick="closeCart()"></div>
 	<div class="cart-panel">
 		<h2 class="cart-title">Shopping Cart</h2>
 		<div class="cart-content"></div>
 		<div class="cart-actions">
-			<!-- ✅ Button to open dynamic checkout -->
 			<button class="checkout-btn-mini" onclick="openCheckout()">CHECKOUT</button>
 		</div>
 		<button class="cart-close-btn" onclick="closeCart()">×</button>
@@ -102,88 +102,88 @@
 		</div>
 	</section>
 
-	<!-- Checkout content dynamically loaded here -->
+	<!-- Checkout container (will load dynamically) -->
 	<div id="checkoutContainer"></div>
 
-	<!-- Firebase + Script -->
+	<!-- Firebase -->
 	<script src="https://www.gstatic.com/firebasejs/10.4.0/firebase-app-compat.js"></script>
 	<script src="https://www.gstatic.com/firebasejs/10.4.0/firebase-auth-compat.js"></script>
 	<script src="https://www.gstatic.com/firebasejs/10.4.0/firebase-firestore-compat.js"></script>
+
+	<!-- Your main JS -->
 	<script src="script.js" defer></script>
 
-	<!-- SPA / Checkout loader script -->
-<script>
-	let cachedCheckout = null;
+	<!-- Dynamic Checkout Loader -->
+	<script>
+		let cachedCheckout = null;
 
-	function openCheckout() {
-		// Hide other sections
-		document.getElementById('home').style.display = 'none';
-		document.getElementById('about').style.display = 'none';
-		document.querySelector('.cart-panel').style.display = 'none';
-		document.getElementById('cartOverlay').style.display = 'none';
+		function openCheckout() {
+			// Hide other sections
+			document.getElementById('home').style.display = 'none';
+			document.getElementById('about').style.display = 'none';
+			document.querySelector('.cart-panel').style.display = 'none';
+			document.getElementById('cartOverlay').style.display = 'none';
 
-		const checkout = document.getElementById('checkoutContainer');
+			const checkout = document.getElementById('checkoutContainer');
 
-		// Load once and reuse (caching)
-		if (cachedCheckout) {
-			checkout.innerHTML = cachedCheckout;
-			checkout.classList.add('visible');
-			renderCheckoutLogic();
-			return;
-		}
-
-		fetch('checkout.html')
-			.then(response => response.text())
-			.then(html => {
-				cachedCheckout = html;
-				checkout.innerHTML = html;
+			// Load once and reuse
+			if (cachedCheckout) {
+				checkout.innerHTML = cachedCheckout;
 				checkout.classList.add('visible');
 				renderCheckoutLogic();
-			})
-			.catch(error => {
-				console.error('Failed to load checkout:', error);
-				checkout.innerHTML = "<p>Failed to load checkout page.</p>";
-			});
-	}
-
-	function renderCheckoutLogic() {
-		// Wait for DOM to update and render
-		requestAnimationFrame(() => {
-			const product = JSON.parse(localStorage.getItem('checkoutProduct'));
-			if (!product) return;
-
-			// Safeguard: wait until DOM has matching IDs
-			const nameElem = document.getElementById('product-name');
-			if (!nameElem) return console.warn('Checkout content not yet ready.');
-
-			document.getElementById('product-name').textContent = product.name;
-			document.getElementById('product-size').textContent = product.size;
-			document.getElementById('product-description').textContent = product.description;
-			document.getElementById('product-price').textContent = `₱${product.price.toFixed(2)}`;
-
-			const imageElem = document.querySelector('#product-image img');
-			if (product.image) {
-				imageElem.src = product.image;
-				imageElem.style.display = 'block';
+				return;
 			}
 
-			const tax = product.price * 0.08;
-			const total = product.price + tax;
-
-			document.getElementById('subtotal').textContent = `₱${product.price.toFixed(2)}`;
-			document.getElementById('tax').textContent = `₱${tax.toFixed(2)}`;
-			document.getElementById('total').textContent = `₱${total.toFixed(2)}`;
-
-			// Rebind Proceed to Payment button
-			const payBtn = document.querySelector('.checkout-btn');
-			if (payBtn) {
-				payBtn.addEventListener('click', () => {
-					alert('Redirecting to secure payment...');
+			// Load checkout.html
+			fetch('checkout.html')
+				.then(response => response.text())
+				.then(html => {
+					cachedCheckout = html;
+					checkout.innerHTML = html;
+					checkout.classList.add('visible');
+					renderCheckoutLogic();
+				})
+				.catch(error => {
+					console.error('Failed to load checkout:', error);
+					checkout.innerHTML = "<p>Failed to load checkout page.</p>";
 				});
-			}
-		});
-	}
-</script>
+		}
 
+		function renderCheckoutLogic() {
+			// Wait for DOM to be ready
+			requestAnimationFrame(() => {
+				const product = JSON.parse(localStorage.getItem('checkoutProduct'));
+				if (!product) return;
+
+				const nameElem = document.getElementById('product-name');
+				if (!nameElem) return;
+
+				nameElem.textContent = product.name;
+				document.getElementById('product-size').textContent = product.size;
+				document.getElementById('product-description').textContent = product.description;
+				document.getElementById('product-price').textContent = `₱${product.price.toFixed(2)}`;
+
+				const imageElem = document.querySelector('#product-image img');
+				if (product.image) {
+					imageElem.src = product.image;
+					imageElem.style.display = 'block';
+				}
+
+				const tax = product.price * 0.08;
+				const total = product.price + tax;
+
+				document.getElementById('subtotal').textContent = `₱${product.price.toFixed(2)}`;
+				document.getElementById('tax').textContent = `₱${tax.toFixed(2)}`;
+				document.getElementById('total').textContent = `₱${total.toFixed(2)}`;
+
+				const payBtn = document.querySelector('.checkout-btn');
+				if (payBtn) {
+					payBtn.addEventListener('click', () => {
+						alert('Redirecting to secure payment...');
+					});
+				}
+			});
+		}
+	</script>
 </body>
 </html>

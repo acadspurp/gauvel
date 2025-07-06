@@ -207,7 +207,7 @@
 		  }
 
 		  authButton.innerHTML = `
-			<span style="margin-right: 8px;">👤</span>
+			<span style="color: #333333; font-size: 24px;">👤</span>
 			<span>${displayName}</span>
 		  `;
 		  authButton.href = 'profile.html';

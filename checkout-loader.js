@@ -2,7 +2,7 @@
 
 let cachedCheckout = null;
 
-export function openCheckout() {
+window.openCheckout = function () {
 	const home = document.getElementById('home');
 	const about = document.getElementById('about');
 	const cartPanel = document.querySelector('.cart-panel');
@@ -16,6 +16,7 @@ export function openCheckout() {
 
 	if (cachedCheckout) {
 		checkout.innerHTML = cachedCheckout;
+		checkout.style.display = 'block';
 		checkout.classList.add('visible');
 		runCheckoutScripts();
 		return;

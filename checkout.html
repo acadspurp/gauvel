@@ -166,7 +166,7 @@
             createdAt: firebase.firestore.FieldValue.serverTimestamp()
           });
 
-          showPopup('Order placed! Check your email for confirmation.', 'success');
+          showPopup('Order placed! Proceed to Payment on the Contacts tab.', 'success');
           localStorage.removeItem('cart');
           setTimeout(() => window.location.href = 'contact.html', 2000);
         } catch (error) {

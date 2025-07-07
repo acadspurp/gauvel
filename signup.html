@@ -54,15 +54,29 @@
 			  margin-top: 90px;
 			}
 			
-		.profile-button span:first-child {
+		.profile-button {
+			  display: flex;
+			  align-items: center;
+			  gap: 8px;
+			  padding: 6px 12px;
+			  border-radius: 4px;
+			  background-color: transparent;
+			  color: inherit;
+			  transition: background-color 0.3s ease;
+			}
+			
+		.profile-button .icon {
 			  color: black;
 			  transition: color 0.3s ease;
 			}
 			
-		.profile-button:hover span:first-child {
+		.profile-button:hover {
+			  background-color: #1a1a1a;
+			}
+			
+		.profile-button:hover .icon {
 			  color: white;
 			}
-
 
 		.nav-tabs {
 			display: flex;
@@ -554,8 +568,8 @@
 						
 						// Update button to show profile
 						authButton.innerHTML = `
-							<span style="color: #333333; font-size: 20px;">👤</span>
-							<span>${displayName}</span>
+							<span class="icon">👤</span>
+							  <span class="name">${displayName}</span>
 						`;
 						authButton.href = 'profile.html';
 						authButton.classList.remove('auth-button');
@@ -714,6 +728,7 @@
 					});
 				}
 			});
+			authButton.classList.add('profile-button');
 		</script>
 	</body>
 	</html>

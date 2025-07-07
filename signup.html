@@ -39,20 +39,30 @@
 		}
 
 		.container {
-			background: rgba(255, 255, 255, 0.95);
-			backdrop-filter: blur(20px);
-			border: 1px solid rgba(0, 0, 0, 0.08);
-			border-radius: 2px;
-			box-shadow: 
-				0 25px 50px -12px rgba(0, 0, 0, 0.08),
-				0 0 0 1px rgba(255, 255, 255, 0.9) inset;
-			width: 100%;
-			max-width: 600px;
-			padding: 60px 50px;
-			position: relative;
-			z-index: 2;
-			margin-top: 90px;
-		}
+			  background: rgba(255, 255, 255, 0.95);
+			  backdrop-filter: blur(20px);
+			  border: 1px solid rgba(0, 0, 0, 0.08);
+			  border-radius: 2px;
+			  box-shadow: 
+			    0 25px 50px -12px rgba(0, 0, 0, 0.08),
+			    0 0 0 1px rgba(255, 255, 255, 0.9) inset;
+			  width: 100%;
+			  max-width: 450px; 
+			  padding: 40px 30px; 
+			  position: relative;
+			  z-index: 2;
+			  margin-top: 90px;
+			}
+			
+		.profile-button span:first-child {
+			  color: black;
+			  transition: color 0.3s ease;
+			}
+			
+		.profile-button:hover span:first-child {
+			  color: white;
+			}
+
 
 		.nav-tabs {
 			display: flex;

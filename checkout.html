@@ -169,6 +169,14 @@
 
     function processPayment() {
       const btn = document.querySelector('.checkout-btn');
+      const user = localStorage.getItem('user');
+
+      if (!user) {
+        alert('Please log in or sign up to complete your purchase.');
+        window.location.href = 'signup.html';
+        return;
+      }
+
       btn.textContent = 'Processing...';
       btn.disabled = true;
 
@@ -185,6 +193,7 @@
 
       if (cart.length === 0) {
         orderItems.innerHTML = `<div class="empty-cart"><p>🛒 Your cart is empty.</p></div>`;
+        document.querySelector('.checkout-btn').disabled = true;
         return;
       }
 

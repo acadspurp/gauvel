@@ -184,90 +184,99 @@
     </div>
   </div>
 
-  <script type="module">
-    import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+<script type="module">
+  import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
 
-    const firebaseConfig = {
-				apiKey: "AIzaSyD9aQYJduGX-IBnCGvxYBQHCrZH05GAhoY",
-				authDomain: "gauvelfragrance-80197.firebaseapp.com",
-				projectId: "gauvelfragrance-80197",
-				storageBucket: "gauvelfragrance-80197.firebasestorage.app",
-				messagingSenderId: "116770427568",
-				appId: "1:116770427568:web:16373de8c306a1b771e175",
-				measurementId: "G-EG12NGJSYS"
-			};
+  const firebaseConfig = {
+    apiKey: "AIzaSyD9aQYJduGX-IBnCGvxYBQHCrZH05GAhoY",
+    authDomain: "gauvelfragrance-80197.firebaseapp.com",
+    projectId: "gauvelfragrance-80197",
+    storageBucket: "gauvelfragrance-80197.firebasestorage.app",
+    messagingSenderId: "116770427568",
+    appId: "1:116770427568:web:16373de8c306a1b771e175",
+    measurementId: "G-EG12NGJSYS"
+  };
 
-    const app = initializeApp(firebaseConfig);
-    const auth = getAuth(app);
+  const app = initializeApp(firebaseConfig);
+  const auth = getAuth(app);
 
-    onAuthStateChanged(auth, user => {
-      if (!user) {
-        // Not logged in, redirect to signup
+  let currentUser = null;
+
+  onAuthStateChanged(auth, user => {
+    if (!user) {
+      window.location.href = 'signup.html';
+    } else {
+      currentUser = user;
+    }
+  });
+
+  function formatCurrency(amount) {
+    return new Intl.NumberFormat('en-PH', {
+      style: 'currency',
+      currency: 'PHP'
+    }).format(amount);
+  }
+
+  function processPayment() {
+    const btn = document.querySelector('.checkout-btn');
+    btn.textContent = 'Processing...';
+    btn.disabled = true;
+
+    setTimeout(() => {
+      if (currentUser) {
+        alert('Complete your payment through this contact. Thank you for purchasing!');
+        localStorage.removeItem('cart');
+        window.location.href = 'contact.html';
+      } else {
+        alert('Please sign in to complete your purchase.');
         window.location.href = 'signup.html';
       }
+    }, 1000);
+  }
+
+  function populateOrderSummary() {
+    const orderItems = document.getElementById('order-items');
+    const cart = JSON.parse(localStorage.getItem('cart')) || [];
+
+    if (cart.length === 0) {
+      orderItems.innerHTML = `<div class="empty-cart"><p>🛒 Your cart is empty.</p></div>`;
+      return;
+    }
+
+    let subtotal = 0;
+
+    cart.forEach(product => {
+      const imagePath = `res/${product.name.toUpperCase()}/1.png`;
+      const item = document.createElement('div');
+      item.className = 'summary-item';
+
+      item.innerHTML = `
+        <div class="item-image">
+          <img src="${imagePath}" alt="${product.name}">
+        </div>
+        <div class="item-info">
+          <h3>${product.name}</h3>
+          <p>${product.size}</p>
+          <p>${product.description || 'Eau de Parfum'}</p>
+        </div>
+        <div class="item-price">${formatCurrency(product.price * product.quantity)}</div>
+      `;
+
+      orderItems.appendChild(item);
+      subtotal += product.price * product.quantity;
     });
 
-    function formatCurrency(amount) {
-      return new Intl.NumberFormat('en-PH', {
-        style: 'currency',
-        currency: 'PHP'
-      }).format(amount);
-    }
+    const tax = subtotal * 0.08;
+    const total = subtotal + tax;
 
-    function processPayment() {
-      const btn = document.querySelector('.checkout-btn');
-      btn.textContent = 'Processing...';
-      btn.disabled = true;
+    document.getElementById('subtotal').textContent = formatCurrency(subtotal);
+    document.getElementById('tax').textContent = formatCurrency(tax);
+    document.getElementById('total').textContent = formatCurrency(total);
+  }
 
-      setTimeout(() => {
-        alert('Thank you for your purchase!');
-        localStorage.removeItem('cart');
-        window.location.href = 'index.html';
-      }, 2000);
-    }
+  document.addEventListener('DOMContentLoaded', populateOrderSummary);
+</script>
 
-    function populateOrderSummary() {
-      const orderItems = document.getElementById('order-items');
-      const cart = JSON.parse(localStorage.getItem('cart')) || [];
-
-      if (cart.length === 0) {
-        orderItems.innerHTML = `<div class="empty-cart"><p>🛒 Your cart is empty.</p></div>`;
-        return;
-      }
-
-      let subtotal = 0;
-
-      cart.forEach(product => {
-        const imagePath = `res/${product.name.toUpperCase()}/1.png`;
-        const item = document.createElement('div');
-        item.className = 'summary-item';
-
-        item.innerHTML = `
-          <div class="item-image">
-            <img src="${imagePath}" alt="${product.name}">
-          </div>
-          <div class="item-info">
-            <h3>${product.name}</h3>
-            <p>${product.size}</p>
-            <p>${product.description || 'Eau de Parfum'}</p>
-          </div>
-          <div class="item-price">${formatCurrency(product.price * product.quantity)}</div>
-        `;
-
-        orderItems.appendChild(item);
-        subtotal += product.price * product.quantity;
-      });
-
-      const tax = subtotal * 0.08;
-      const total = subtotal + tax;
-
-      document.getElementById('subtotal').textContent = formatCurrency(subtotal);
-      document.getElementById('tax').textContent = formatCurrency(tax);
-      document.getElementById('total').textContent = formatCurrency(total);
-    }
-
-    document.addEventListener('DOMContentLoaded', populateOrderSummary);
-  </script>
 </body>
 </html>

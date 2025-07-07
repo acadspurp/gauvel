@@ -96,6 +96,7 @@
       display: flex;
       justify-content: center;
       gap: 1rem;
+      flex-wrap: wrap;
     }
 
     .checkout-btn,
@@ -123,6 +124,30 @@
       text-align: center;
       padding: 2rem;
       color: #777;
+    }
+
+    @media (max-width: 600px) {
+      .checkout-container {
+        padding: 1rem;
+        margin: 1rem;
+      }
+
+      .summary-item {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      .item-image {
+        width: 100%;
+        height: auto;
+        margin-bottom: 0.5rem;
+      }
+
+      .item-price {
+        margin-left: 0;
+        align-self: flex-end;
+        font-size: 0.9rem;
+      }
     }
   </style>
 </head>
@@ -159,7 +184,30 @@
     </div>
   </div>
 
-  <script>
+  <script type="module">
+    import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+
+    const firebaseConfig = {
+				apiKey: "AIzaSyD9aQYJduGX-IBnCGvxYBQHCrZH05GAhoY",
+				authDomain: "gauvelfragrance-80197.firebaseapp.com",
+				projectId: "gauvelfragrance-80197",
+				storageBucket: "gauvelfragrance-80197.firebasestorage.app",
+				messagingSenderId: "116770427568",
+				appId: "1:116770427568:web:16373de8c306a1b771e175",
+				measurementId: "G-EG12NGJSYS"
+			};
+
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+
+    onAuthStateChanged(auth, user => {
+      if (!user) {
+        // Not logged in, redirect to signup
+        window.location.href = 'signup.html';
+      }
+    });
+
     function formatCurrency(amount) {
       return new Intl.NumberFormat('en-PH', {
         style: 'currency',
@@ -169,14 +217,6 @@
 
     function processPayment() {
       const btn = document.querySelector('.checkout-btn');
-      const user = localStorage.getItem('user');
-
-      if (!user) {
-        alert('Please log in or sign up to complete your purchase.');
-        window.location.href = 'signup.html';
-        return;
-      }
-
       btn.textContent = 'Processing...';
       btn.disabled = true;
 
@@ -193,7 +233,6 @@
 
       if (cart.length === 0) {
         orderItems.innerHTML = `<div class="empty-cart"><p>🛒 Your cart is empty.</p></div>`;
-        document.querySelector('.checkout-btn').disabled = true;
         return;
       }
 

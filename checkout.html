@@ -13,152 +13,41 @@
       margin-top: 80px;
       font-size: 0.75rem;
     }
-
-    .checkout-container {
-      max-width: 900px;
-      margin: 2rem auto;
-      padding: 2rem;
-      background: white;
-      border-radius: 12px;
-      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+    .checkout-container { max-width: 900px; margin: 2rem auto; padding: 2rem; background: white; border-radius: 12px; box-shadow: 0 4px 20px rgba(0,0,0,0.05); }
+    .checkout-header { text-align: center; margin-bottom: 2rem; }
+    .checkout-header h1 { font-size: 1.5rem; text-transform: uppercase; margin-bottom: 0.5rem; }
+    .order-summary { background: #fafafa; padding: 1.5rem; border-radius: 10px; border: 1px solid #ccc; }
+    .summary-item { display: flex; gap: 1rem; margin-bottom: 1.5rem; border-bottom: 1px solid #ccc; padding-bottom: 1rem; }
+    .item-image { width: 80px; height: 80px; border-radius: 8px; overflow: hidden; flex-shrink: 0; }
+    .item-image img { width: 100%; height: 100%; object-fit: cover; }
+    .item-info h3 { font-size: 1rem; margin: 0; }
+    .item-info p { margin: 0.25rem 0; font-size: 0.75rem; }
+    .item-price { margin-left: auto; font-weight: bold; font-size: 1rem; }
+    .total-section { margin-top: 2rem; border-top: 2px solid #ccc; padding-top: 1rem; }
+    .total-row { display: flex; justify-content: space-between; margin: 0.5rem 0; }
+    .checkout-actions { margin-top: 2rem; display: flex; justify-content: center; gap: 1rem; }
+    .checkout-btn, .continue-shopping {
+      padding: 0.75rem 1.5rem; font-size: 0.75rem;
+      text-transform: uppercase; border: none; border-radius: 5px; cursor: pointer;
     }
-
-    .checkout-header {
-      text-align: center;
-      margin-bottom: 2rem;
-    }
-
-    .checkout-header h1 {
-      font-size: 1.5rem;
-      text-transform: uppercase;
-      margin-bottom: 0.5rem;
-    }
-
-    .order-summary {
-      background: #fafafa;
-      padding: 1.5rem;
-      border-radius: 10px;
-      border: 1px solid #ccc;
-    }
-
-    .summary-item {
-      display: flex;
-      gap: 1rem;
-      margin-bottom: 1.5rem;
-      border-bottom: 1px solid #ccc;
-      padding-bottom: 1rem;
-    }
-
-    .item-image {
-      width: 80px;
-      height: 80px;
-      border-radius: 8px;
-      overflow: hidden;
-      flex-shrink: 0;
-    }
-
-    .item-image img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-    }
-
-    .item-info h3 {
-      font-size: 1rem;
-      margin: 0;
-    }
-
-    .item-info p {
-      margin: 0.25rem 0;
-      font-size: 0.75rem;
-    }
-
-    .item-price {
-      margin-left: auto;
-      font-weight: bold;
-      font-size: 1rem;
-    }
-
-    .total-section {
-      margin-top: 2rem;
-      border-top: 2px solid #ccc;
-      padding-top: 1rem;
-    }
-
-    .total-row {
-      display: flex;
-      justify-content: space-between;
-      margin: 0.5rem 0;
-    }
-
-    .checkout-actions {
-      margin-top: 2rem;
-      display: flex;
-      justify-content: center;
-      gap: 1rem;
-    }
-
-    .checkout-btn,
-    .continue-shopping {
-      padding: 0.75rem 1.5rem;
-      font-size: 0.75rem;
-      text-transform: uppercase;
-      border: none;
-      border-radius: 5px;
-      cursor: pointer;
-    }
-
-    .checkout-btn {
-      background: #8b7355;
-      color: white;
-    }
-
-    .continue-shopping {
-      background: #444;
-      color: white;
-      text-decoration: none;
-    }
-
-    .empty-cart {
-      text-align: center;
-      padding: 2rem;
-      color: #777;
-    }
+    .checkout-btn { background: #8b7355; color: white; }
+    .continue-shopping { background: #444; color: white; text-decoration: none; }
+    .empty-cart { text-align: center; padding: 2rem; color: #777; }
 
     .popup {
-      position: fixed;
-      top: 30px;
-      right: 30px;
-      padding: 20px 30px;
-      background: rgba(255, 255, 255, 0.95);
+      position: fixed; top: 30px; right: 30px;
+      padding: 20px 30px; background: rgba(255,255,255,0.95);
       backdrop-filter: blur(20px);
-      border: 1px solid rgba(0, 0, 0, 0.1);
-      border-radius: 2px;
-      font-size: 12px;
-      font-weight: 500;
-      letter-spacing: 1px;
+      border: 1px solid rgba(0,0,0,0.1); border-radius: 2px;
+      font-size: 12px; font-weight: 500; letter-spacing: 1px;
       text-transform: uppercase;
-      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
-      transform: translateX(400px);
-      opacity: 0;
-      transition: all 0.4s ease;
-      z-index: 1000;
+      box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+      transform: translateX(400px); opacity: 0;
+      transition: all 0.4s ease; z-index: 1000;
     }
-
-    .popup.show {
-      transform: translateX(0);
-      opacity: 1;
-    }
-
-    .popup.success {
-      color: #2d5a27;
-      border-left: 3px solid #2d5a27;
-    }
-
-    .popup.error {
-      color: #8b2635;
-      border-left: 3px solid #8b2635;
-    }
+    .popup.show { transform: translateX(0); opacity: 1; }
+    .popup.success { color: #2d5a27; border-left: 3px solid #2d5a27; }
+    .popup.error { color: #8b2635; border-left: 3px solid #8b2635; }
   </style>
 </head>
 <body>
@@ -171,20 +60,10 @@
     <div class="order-summary">
       <h2>Order Summary</h2>
       <div id="order-items"></div>
-
       <div class="total-section">
-        <div class="total-row">
-          <span>Subtotal</span>
-          <span id="subtotal">₱0.00</span>
-        </div>
-        <div class="total-row">
-          <span>Tax (8%)</span>
-          <span id="tax">₱0.00</span>
-        </div>
-        <div class="total-row" style="font-weight: bold;">
-          <span>Total</span>
-          <span id="total">₱0.00</span>
-        </div>
+        <div class="total-row"><span>Subtotal</span><span id="subtotal">₱0.00</span></div>
+        <div class="total-row"><span>Tax (8%)</span><span id="tax">₱0.00</span></div>
+        <div class="total-row" style="font-weight: bold;"><span>Total</span><span id="total">₱0.00</span></div>
       </div>
     </div>
 
@@ -196,7 +75,6 @@
 
   <div id="popup" class="popup"></div>
 
-  <!-- Firebase SDK -->
   <script src="https://www.gstatic.com/firebasejs/10.4.0/firebase-app-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/10.4.0/firebase-auth-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/10.4.0/firebase-firestore-compat.js"></script>
@@ -211,7 +89,6 @@
       appId: "1:116770427568:web:16373de8c306a1b771e175",
       measurementId: "G-EG12NGJSYS"
     };
-
     firebase.initializeApp(firebaseConfig);
     const auth = firebase.auth();
     const db = firebase.firestore();
@@ -227,59 +104,58 @@
       return new Intl.NumberFormat('en-PH', { style: 'currency', currency: 'PHP' }).format(amount);
     }
 
-   async function processPayment() {
-  const btn = document.querySelector('.checkout-btn');
-  btn.textContent = 'Processing...';
-  btn.disabled = true;
+    async function processPayment() {
+      const btn = document.querySelector('.checkout-btn');
+      btn.textContent = 'Processing...';
+      btn.disabled = true;
 
-  const cart = JSON.parse(localStorage.getItem('cart')) || [];
-  if (cart.length === 0) {
-    showPopup('Cart is empty', 'error');
-    btn.disabled = false;
-    btn.textContent = 'Complete Purchase';
-    return;
-  }
+      const cart = JSON.parse(localStorage.getItem('cart')) || [];
+      if (cart.length === 0) {
+        showPopup('Cart is empty', 'error');
+        btn.disabled = false;
+        btn.textContent = 'Complete Purchase';
+        return;
+      }
 
-  const subtotal = cart.reduce((sum, p) => sum + p.price * p.quantity, 0);
-  const tax = subtotal * 0.08;
-  const total = subtotal + tax;
+      const subtotal = cart.reduce((sum, p) => sum + p.price * p.quantity, 0);
+      const tax = subtotal * 0.08;
+      const total = subtotal + tax;
 
-  // Wait for auth state to be determined
-  firebase.auth().onAuthStateChanged(async (user) => {
-    if (!user) {
-      showPopup('Please sign up or log in to complete your purchase.', 'error');
-      setTimeout(() => {
-        window.location.href = 'signup.html';
-      }, 2000);
-      return;
-    }
+      auth.onAuthStateChanged(async (user) => {
+        if (!user) {
+          showPopup('Please sign in to complete purchase.', 'error');
+          setTimeout(() => window.location.href = 'signup.html', 2000);
+          return;
+        }
 
-    // If user is logged in, proceed with order
-    try {
-      await db.collection("orders").add({
-        uid: user.uid,
-        cart,
-        subtotal,
-        tax,
-        total,
-        createdAt: firebase.firestore.FieldValue.serverTimestamp()
+        try {
+          const userDoc = await db.collection("users").doc(user.uid).get();
+          const userData = userDoc.exists ? userDoc.data() : {};
+          const fullAddress = `${userData.barangay || ''}, ${userData.city || ''}, ${userData.province || ''}, ${userData.region || ''}`;
+
+          await db.collection("orders").add({
+            uid: user.uid,
+            email: user.email,
+            fullName: userData.fullName || '',
+            address: fullAddress,
+            cart,
+            subtotal,
+            tax,
+            total,
+            createdAt: firebase.firestore.FieldValue.serverTimestamp()
+          });
+
+          showPopup('Order placed! Check your email for confirmation.', 'success');
+          localStorage.removeItem('cart');
+          setTimeout(() => window.location.href = 'contact.html', 2000);
+        } catch (error) {
+          console.error(error);
+          showPopup('Failed to place order.', 'error');
+          btn.disabled = false;
+          btn.textContent = 'Complete Purchase';
+        }
       });
-
-      showPopup('Complete your payment through this contact. Thank you for purchasing!', 'success');
-      localStorage.removeItem('cart');
-
-      setTimeout(() => {
-        window.location.href = 'contact.html';
-      }, 2000);
-    } catch (error) {
-      console.error(error);
-      showPopup('Failed to process order', 'error');
-      btn.disabled = false;
-      btn.textContent = 'Complete Purchase';
     }
-  });
-}
-
 
     function populateOrderSummary() {
       const orderItems = document.getElementById('order-items');
@@ -318,3 +194,4 @@
   </script>
 </body>
 </html>
+

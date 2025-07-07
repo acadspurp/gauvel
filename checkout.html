@@ -71,7 +71,36 @@
     .popup.error { color: #8b2635; border-left: 3px solid #8b2635; }
   </style>
 </head>
-<body>
+<body> 
+  <nav class="navbar">
+		<div class="navbar__container">
+			<div class="navbar__toggle">
+				<span></span>
+				<span></span>
+				<span></span>
+			</div>
+			<a href="index.html" class="navbar__logo uppercase">GAUVEL</a>
+			<ul class="navbar__menu">
+				<li><a href="index.html" class="navbar__links uppercase">Home</a></li>
+				<li><a href="products.html" class="navbar__links uppercase">Fragrances</a></li>
+				<li><a href="contact.html" class="navbar__links uppercase">Contact</a></li>
+			</ul>
+		</div>
+	</nav> 
+		<div class="navbar__overlay"></div>
+
+			<!-- Mobile Slide Menu -->
+			<div class="navbar__mobile-menu">
+			  <div class="navbar__mobile-header">
+			    <a class="navbar__mobile-logo" href="#home">GAUVEL</a>
+			    <button class="navbar__mobile-close">✕</button>
+			  </div>
+			  <ul class="navbar__mobile-links">
+			    <li><a href="#home">Home</a></li>
+			    <li><a href="products.html">Fragrances</a></li>
+			    <li><a href="contact.html">Contact</a></li>
+			  </ul>
+			</div>
   <div class="checkout-container">
     <div class="checkout-header">
       <h1>Checkout</h1>

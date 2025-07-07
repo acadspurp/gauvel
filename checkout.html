@@ -257,9 +257,9 @@
           createdAt: firebase.firestore.FieldValue.serverTimestamp()
         });
 
-        showPopup('Thank you for your purchase!', 'success');
+        showPopup('Complete your payment through this contact. Thank you for purchasing!', 'success');
         localStorage.removeItem('cart');
-        setTimeout(() => window.location.href = 'index.html', 2000);
+        setTimeout(() => window.location.href = 'contact.html', 2000);
       } catch (error) {
         console.error(error);
         showPopup('Failed to process order', 'error');

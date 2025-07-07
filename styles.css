@@ -52,7 +52,7 @@ body {
     margin: 0 auto;
     padding: 0 2rem;
     display: grid;
-	grid-template-columns: 1fr auto 1fr;
+    grid-template-columns: 1fr auto 1fr;
     justify-content: space-between;
     align-items: center;
     height: 80px;
@@ -105,7 +105,6 @@ body {
     padding: 0.5rem;
     background: none;
     border: none;
-    justify-self: start;
     z-index: 1002;
 }
 
@@ -858,27 +857,35 @@ section {
     .navbar__container {
         padding: 0 1rem;
         height: 70px;
-        grid-template-columns: auto 1fr auto;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
     }
     
     .navbar__logo {
         font-size: 1rem;
+        order: 2;
     }
 
     .navbar__toggle {
         display: flex;
+        order: 1;
     }
 
     .navbar__menu {
         display: none;
     }
 
-    .navbar__actions .auth-button {
-        display: none;
+    .navbar__actions {
+        order: 3;
+        display: flex;
+        gap: 0.5rem;
     }
     
-    .navbar__actions {
-        gap: 0.5rem;
+    .navbar__actions .auth-button {
+        display: inline-block;
+        padding: 8px 16px;
+        font-size: 0.7rem;
     }
     
     .cart-button {
@@ -951,27 +958,35 @@ section {
     .navbar__container {
         padding: 0 1rem;
         height: 70px;
-        grid-template-columns: auto 1fr auto;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
     }
     
     .navbar__logo {
         font-size: 1rem;
+        order: 2;
     }
     
     .navbar__toggle {
         display: flex;
+        order: 1;
     }
 
     .navbar__menu {
         display: none;
     }
 
-    .navbar__actions .auth-button {
-        display: none;
+    .navbar__actions {
+        order: 3;
+        display: flex;
+        gap: 0.5rem;
     }
     
-    .navbar__actions {
-        gap: 0.5rem;
+    .navbar__actions .auth-button {
+        display: inline-block;
+        padding: 8px 12px;
+        font-size: 0.7rem;
     }
     
     .cart-button {
@@ -1134,18 +1149,40 @@ section {
 @media (max-width: 480px) {
     .navbar__container {
         padding: 0 0.8rem;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+    
+    .navbar__logo {
+        font-size: 0.9rem;
+        order: 2;
     }
     
     .navbar__toggle {
         display: flex;
+        order: 1;
     }
 
     .navbar__menu {
         display: none;
     }
 
+    .navbar__actions {
+        order: 3;
+        display: flex;
+        gap: 0.3rem;
+    }
+    
     .navbar__actions .auth-button {
-        display: none;
+        display: inline-block;
+        padding: 6px 10px;
+        font-size: 0.65rem;
+    }
+    
+    .cart-button {
+        width: 35px;
+        height: 35px;
     }
 
     .navbar__mobile-menu {
@@ -1154,41 +1191,4 @@ section {
     }
 
     .navbar__mobile-links a {
-        font-size: 1.2rem;
-        padding: 1.2rem 0;
-    }
-
-    section {
-        padding: 80px 0.8rem 40px;
-    }
-
-    .hero__title {
-        font-size: 2.2rem;
-    }
-    
-    .hero__subtitle {
-        font-size: 0.9rem;
-    }
-    
-    .hero__description {
-        font-size: 1rem;
-    }
-    
-    .cta-button {
-        padding: 0.9rem 1.3rem;
-        font-size: 0.9rem;
-    }
-
-    .products__title {
-        font-size: 1.8rem;
-    }
-    
-    .product__image {
-        height: 220px;
-    }
-    
-    .product__content {
-        padding: 1rem;
-    }
-
-    .
+        font

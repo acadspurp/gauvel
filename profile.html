@@ -113,8 +113,7 @@
 		<h2 class="cart-title">Shopping Cart</h2>
 		<div class="cart-content"></div>
 		<div class="cart-actions">
-			<!-- FIXED BUTTON -->
-			<a href="checkout.html" class="checkout-btn-mini">CHECKOUT</a>
+			<button class="checkout-btn-mini" onclick="openCheckout()">CHECKOUT</button>
 		</div>
 		<button class="cart-close-btn" onclick="closeCart()">×</button>
 	</div>
@@ -234,5 +233,6 @@
       }
     });
   </script>
+	<div id="checkoutContainer" style="display: none;"></div>
 </body>
 </html>

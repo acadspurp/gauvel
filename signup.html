@@ -7,8 +7,6 @@
 	  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
 	  <link rel="stylesheet" href="styles.css" />
 	  <script src="script.js" defer></script>
-	  <script src="checkout-loader.js" defer></script>
-
 	<style>
 	 * {
 			margin: 0;
@@ -293,27 +291,10 @@
 			</ul>
 			<div class="navbar__actions">
 				<a href="signup.html" class="auth-button uppercase" id="authButton">Sign In/Sign Up</a>
-				<button id="cartButton" class="cart-button" onclick="openCart()">
-					<img src="cart.png" alt="cart" />
-					<span id="cartCount" class="cart-count">0</span>
-				</button>
 			</div>
 		</div>
 	</nav>
 
-	<!-- Cart Panel -->
-	<div id="cartOverlay" onclick="closeCart()"></div>
-	<div class="cart-panel">
-		<h2 class="cart-title">Shopping Cart</h2>
-		<div class="cart-content"></div>
-		<div class="cart-actions">
-			<!-- FIXED BUTTON -->
-			<a href="checkout.html" class="checkout-btn-mini">CHECKOUT</a>
-		</div>
-		<button class="cart-close-btn" onclick="closeCart()">×</button>
-	</div>
-
-		
 		<div class="container">
 
 			<div class="nav-tabs">

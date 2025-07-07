@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Checkout</title>
+  <title>Checkout - GAUVEL</title>
   <link rel="stylesheet" href="styles.css" />
   <style>
     body {
@@ -96,7 +96,6 @@
       display: flex;
       justify-content: center;
       gap: 1rem;
-      flex-wrap: wrap;
     }
 
     .checkout-btn,
@@ -126,28 +125,39 @@
       color: #777;
     }
 
-    @media (max-width: 600px) {
-      .checkout-container {
-        padding: 1rem;
-        margin: 1rem;
-      }
+    .popup {
+      position: fixed;
+      top: 30px;
+      right: 30px;
+      padding: 20px 30px;
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(20px);
+      border: 1px solid rgba(0, 0, 0, 0.1);
+      border-radius: 2px;
+      font-size: 12px;
+      font-weight: 500;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+      transform: translateX(400px);
+      opacity: 0;
+      transition: all 0.4s ease;
+      z-index: 1000;
+    }
 
-      .summary-item {
-        flex-direction: column;
-        align-items: flex-start;
-      }
+    .popup.show {
+      transform: translateX(0);
+      opacity: 1;
+    }
 
-      .item-image {
-        width: 100%;
-        height: auto;
-        margin-bottom: 0.5rem;
-      }
+    .popup.success {
+      color: #2d5a27;
+      border-left: 3px solid #2d5a27;
+    }
 
-      .item-price {
-        margin-left: 0;
-        align-self: flex-end;
-        font-size: 0.9rem;
-      }
+    .popup.error {
+      color: #8b2635;
+      border-left: 3px solid #8b2635;
     }
   </style>
 </head>
@@ -184,99 +194,114 @@
     </div>
   </div>
 
-<script type="module">
-  import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
-  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+  <div id="popup" class="popup"></div>
 
-  const firebaseConfig = {
-    apiKey: "AIzaSyD9aQYJduGX-IBnCGvxYBQHCrZH05GAhoY",
-    authDomain: "gauvelfragrance-80197.firebaseapp.com",
-    projectId: "gauvelfragrance-80197",
-    storageBucket: "gauvelfragrance-80197.firebasestorage.app",
-    messagingSenderId: "116770427568",
-    appId: "1:116770427568:web:16373de8c306a1b771e175",
-    measurementId: "G-EG12NGJSYS"
-  };
+  <!-- Firebase SDK -->
+  <script src="https://www.gstatic.com/firebasejs/10.4.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.4.0/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.4.0/firebase-firestore-compat.js"></script>
 
-  const app = initializeApp(firebaseConfig);
-  const auth = getAuth(app);
+  <script>
+    const firebaseConfig = {
+      apiKey: "AIzaSyD9aQYJduGX-IBnCGvxYBQHCrZH05GAhoY",
+      authDomain: "gauvelfragrance-80197.firebaseapp.com",
+      projectId: "gauvelfragrance-80197",
+      storageBucket: "gauvelfragrance-80197.appspot.com",
+      messagingSenderId: "116770427568",
+      appId: "1:116770427568:web:16373de8c306a1b771e175",
+      measurementId: "G-EG12NGJSYS"
+    };
 
-  let currentUser = null;
+    firebase.initializeApp(firebaseConfig);
+    const auth = firebase.auth();
+    const db = firebase.firestore();
 
-  onAuthStateChanged(auth, user => {
-    if (!user) {
-      window.location.href = 'signup.html';
-    } else {
-      currentUser = user;
+    function showPopup(message, type) {
+      const popup = document.getElementById("popup");
+      popup.textContent = message;
+      popup.className = `popup ${type} show`;
+      setTimeout(() => popup.classList.remove("show"), 3000);
     }
-  });
 
-  function formatCurrency(amount) {
-    return new Intl.NumberFormat('en-PH', {
-      style: 'currency',
-      currency: 'PHP'
-    }).format(amount);
-  }
+    function formatCurrency(amount) {
+      return new Intl.NumberFormat('en-PH', { style: 'currency', currency: 'PHP' }).format(amount);
+    }
 
-  function processPayment() {
-    const btn = document.querySelector('.checkout-btn');
-    btn.textContent = 'Processing...';
-    btn.disabled = true;
+    async function processPayment() {
+      const btn = document.querySelector('.checkout-btn');
+      btn.textContent = 'Processing...';
+      btn.disabled = true;
 
-    setTimeout(() => {
-      if (currentUser) {
-        alert('Complete your payment through this contact. Thank you for purchasing!');
-        localStorage.removeItem('cart');
-        window.location.href = 'contact.html';
-      } else {
-        alert('Please sign in to complete your purchase.');
-        window.location.href = 'signup.html';
+      const cart = JSON.parse(localStorage.getItem('cart')) || [];
+      if (cart.length === 0) {
+        showPopup('Cart is empty', 'error');
+        btn.disabled = false;
+        btn.textContent = 'Complete Purchase';
+        return;
       }
-    }, 1000);
-  }
 
-  function populateOrderSummary() {
-    const orderItems = document.getElementById('order-items');
-    const cart = JSON.parse(localStorage.getItem('cart')) || [];
+      const subtotal = cart.reduce((sum, p) => sum + p.price * p.quantity, 0);
+      const tax = subtotal * 0.08;
+      const total = subtotal + tax;
 
-    if (cart.length === 0) {
-      orderItems.innerHTML = `<div class="empty-cart"><p>🛒 Your cart is empty.</p></div>`;
-      return;
+      try {
+        const user = auth.currentUser;
+        if (!user) throw new Error('User not logged in');
+
+        await db.collection("orders").add({
+          uid: user.uid,
+          cart,
+          subtotal,
+          tax,
+          total,
+          createdAt: firebase.firestore.FieldValue.serverTimestamp()
+        });
+
+        showPopup('Thank you for your purchase!', 'success');
+        localStorage.removeItem('cart');
+        setTimeout(() => window.location.href = 'index.html', 2000);
+      } catch (error) {
+        console.error(error);
+        showPopup('Failed to process order', 'error');
+        btn.disabled = false;
+        btn.textContent = 'Complete Purchase';
+      }
     }
 
-    let subtotal = 0;
+    function populateOrderSummary() {
+      const orderItems = document.getElementById('order-items');
+      const cart = JSON.parse(localStorage.getItem('cart')) || [];
+      if (cart.length === 0) {
+        orderItems.innerHTML = `<div class="empty-cart"><p>🛒 Your cart is empty.</p></div>`;
+        return;
+      }
 
-    cart.forEach(product => {
-      const imagePath = `res/${product.name.toUpperCase()}/1.png`;
-      const item = document.createElement('div');
-      item.className = 'summary-item';
+      let subtotal = 0;
+      cart.forEach(product => {
+        const imagePath = `res/${product.name.toUpperCase()}/1.png`;
+        const item = document.createElement('div');
+        item.className = 'summary-item';
+        item.innerHTML = `
+          <div class="item-image"><img src="${imagePath}" alt="${product.name}"></div>
+          <div class="item-info">
+            <h3>${product.name}</h3>
+            <p>${product.size}</p>
+            <p>${product.description || 'Eau de Parfum'}</p>
+          </div>
+          <div class="item-price">${formatCurrency(product.price * product.quantity)}</div>
+        `;
+        orderItems.appendChild(item);
+        subtotal += product.price * product.quantity;
+      });
 
-      item.innerHTML = `
-        <div class="item-image">
-          <img src="${imagePath}" alt="${product.name}">
-        </div>
-        <div class="item-info">
-          <h3>${product.name}</h3>
-          <p>${product.size}</p>
-          <p>${product.description || 'Eau de Parfum'}</p>
-        </div>
-        <div class="item-price">${formatCurrency(product.price * product.quantity)}</div>
-      `;
+      const tax = subtotal * 0.08;
+      const total = subtotal + tax;
+      document.getElementById('subtotal').textContent = formatCurrency(subtotal);
+      document.getElementById('tax').textContent = formatCurrency(tax);
+      document.getElementById('total').textContent = formatCurrency(total);
+    }
 
-      orderItems.appendChild(item);
-      subtotal += product.price * product.quantity;
-    });
-
-    const tax = subtotal * 0.08;
-    const total = subtotal + tax;
-
-    document.getElementById('subtotal').textContent = formatCurrency(subtotal);
-    document.getElementById('tax').textContent = formatCurrency(tax);
-    document.getElementById('total').textContent = formatCurrency(total);
-  }
-
-  document.addEventListener('DOMContentLoaded', populateOrderSummary);
-</script>
-
+    document.addEventListener('DOMContentLoaded', populateOrderSummary);
+  </script>
 </body>
 </html>
